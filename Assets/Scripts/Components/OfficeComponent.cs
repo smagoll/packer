@@ -1,4 +1,9 @@
-struct OfficeComponent
+using System;
+using System.Collections.Generic;
+
+[Serializable]
+public struct OfficeComponent
 {
-    public FurnitureComponent[] furnitureComponents;
+    public List<FurnitureComponent> Furnitures;
+    public int size;
 }

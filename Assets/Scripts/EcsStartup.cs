@@ -26,7 +26,14 @@ public class EcsStartup : MonoBehaviour
         systems.Init();
     }
 
-    private void AddSystems(){}
+    private void AddSystems()
+    {
+        systems
+            .Add(new OfficeSystem())
+            .Add(new OfficeSpawnerSystem())
+            .Add(new FurnitureSpawnerSystem())
+            .Add(new IncomeSystem());
+    }
 
     private void AddInjections()
     {
@@ -51,9 +58,4 @@ public class EcsStartup : MonoBehaviour
             systems = null;
         }
     }
-}
-
-public class StaticData : ScriptableObject
-{
-    public GameObject officePrefab;
 }
