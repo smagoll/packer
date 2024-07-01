@@ -1,16 +1,26 @@
 using System;
 using Leopotam.Ecs;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Voody.UniLeo;
 
 public class EcsStartup : MonoBehaviour
 {
     [SerializeField]
     private StaticData staticData;
+    [SerializeField]
+    private SceneData sceneData;
     
     public EcsWorld world;
     public EcsSystems systems;
+
+    private void Awake()
+    {
+        sceneData.buttonCreateOffice.onClick.AddListener((() =>
+        {
+            EcsEntity entity = world.NewEntity();
+            entity.Get<AddOfficeEvent>();
+        }));
+    }
 
     private void Start()
     {
@@ -38,10 +48,15 @@ public class EcsStartup : MonoBehaviour
     private void AddInjections()
     {
         systems
-            .Inject(staticData);
+            .Inject(staticData)
+            .Inject(sceneData);
     }
-    
-    private void AddOneFrames(){}
+
+    private void AddOneFrames()
+    {
+        systems
+            .OneFrame<AddOfficeEvent>();
+    }
     
     private void Update()
     {
