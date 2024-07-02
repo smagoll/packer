@@ -1,5 +1,6 @@
-using System;
 using System.Linq;
+using System.Xml.XPath;
+using DefaultNamespace;
 using Leopotam.Ecs;
 using UnityEngine;
 using YG;
@@ -10,10 +11,12 @@ sealed class OfficeSystem : IEcsInitSystem, IEcsRunSystem
     private readonly StaticData staticData;
     private readonly SceneData sceneData;
     private readonly EcsFilter<AddOfficeEvent> addOfficeFilter;
+    private readonly EcsFilter<OfficeComponent> officeFilter;
     
     public void Init()
     {
         CreateStartOffices(YandexGame.savesData.offices);
+        sceneData.buttonCreateFurniture.onClick.AddListener(() => AddFurniture(ref officeFilter.Get1(0), 1));
     }
 
     public void Run()
@@ -31,7 +34,7 @@ sealed class OfficeSystem : IEcsInitSystem, IEcsRunSystem
             var office = AddOffice();
             foreach (var furniture in startOffice.furnitures)
             {
-                AddFurniture(office, furniture.id);
+                AddFurniture(ref office, furniture.id);
             }
         }
     }
@@ -39,13 +42,13 @@ sealed class OfficeSystem : IEcsInitSystem, IEcsRunSystem
     public OfficeComponent AddOffice()
     {
         EcsEntity office = _world.NewEntity();
-        var officeComponent = office.Get<OfficeComponent>();
+        ref var officeComponent = ref office.Get<OfficeComponent>();
         office.Get<PositionComponent>();
         Debug.Log("add office");
         return officeComponent;
     }
 
-    public void AddFurniture(OfficeComponent office, int id)
+    public void AddFurniture(ref OfficeComponent office, int id)
     {
         EcsEntity furniture = _world.NewEntity();
         ref var furnitureComponent = ref furniture.Get<FurnitureComponent>();
@@ -57,8 +60,11 @@ sealed class OfficeSystem : IEcsInitSystem, IEcsRunSystem
         
         if (office.Furnitures == null) office.Furnitures = new();
         office.Furnitures.Add(furnitureComponent);
+
+        EcsEntity entity = _world.NewEntity();
+        entity.Get<UpdateIncomeEvent>();
         
-        Debug.Log("count: " + office.Furnitures.Count);
+        Debug.Log("add furniture");
     }
 
 

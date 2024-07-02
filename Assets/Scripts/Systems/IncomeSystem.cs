@@ -4,11 +4,12 @@ using Cysharp.Threading.Tasks;
 using Leopotam.Ecs;
 using UnityEngine;
 
-sealed class IncomeSystem : IEcsInitSystem, IEcsDestroySystem
+sealed class IncomeSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRunSystem
 {
     private readonly EcsWorld _world = null;
     private readonly SceneData sceneData;
-    private EcsFilter<IncomeComponent> incomeFilter;
+    private readonly EcsFilter<IncomeComponent> incomeFilter;
+    private readonly EcsFilter<UpdateIncomeEvent> incomeEventFilter = null;
 
     private List<IncomeComponent> incomes = new();
     private WalletComponent wallet;
@@ -26,6 +27,15 @@ sealed class IncomeSystem : IEcsInitSystem, IEcsDestroySystem
         Income().Forget();
     }
 
+    public void Run()
+    {
+        foreach (var i in incomeEventFilter)
+        {
+            UpdateIncomes();
+            Debug.Log("update income");
+        }
+    }
+    
     private async UniTaskVoid Income()
     {
         while (isRun)

@@ -55,7 +55,8 @@ public class EcsStartup : MonoBehaviour
     private void AddOneFrames()
     {
         systems
-            .OneFrame<AddOfficeEvent>();
+            .OneFrame<AddOfficeEvent>()
+            .OneFrame<UpdateIncomeEvent>();
     }
     
     private void Update()
