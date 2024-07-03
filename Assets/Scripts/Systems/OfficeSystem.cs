@@ -44,6 +44,7 @@ sealed class OfficeSystem : IEcsInitSystem, IEcsRunSystem
         EcsEntity office = _world.NewEntity();
         ref var officeComponent = ref office.Get<OfficeComponent>();
         ref var positionComponent = ref office.Get<PositionComponent>();
+        office.Get<SpawnOfficeEvent>();
 
         positionComponent.position = position;
         

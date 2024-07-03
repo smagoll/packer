@@ -2,10 +2,10 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public struct FurnitureIncomeData
+public struct OfficeSizeData
 {
     public string title;
     public int id;
-    public int income;
+    public int size;
     public GameObject prefab;
 }

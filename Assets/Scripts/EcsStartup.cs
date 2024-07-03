@@ -46,7 +46,8 @@ public class EcsStartup : MonoBehaviour
     {
         systems
             .OneFrame<AddOfficeEvent>()
-            .OneFrame<UpdateIncomeEvent>();
+            .OneFrame<UpdateIncomeEvent>()
+            .OneFrame<SpawnOfficeEvent>();
     }
     
     private void Update()

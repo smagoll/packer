@@ -1,7 +1,7 @@
 using Leopotam.Ecs;
 using UnityEngine;
 
-sealed class OfficeSpawnerSystem : IEcsInitSystem, IEcsRunSystem
+sealed class OfficeSpawnerSystem : IEcsRunSystem
 {
     private readonly EcsWorld _world = null;
     private StaticData staticData;
@@ -10,29 +10,18 @@ sealed class OfficeSpawnerSystem : IEcsInitSystem, IEcsRunSystem
     private readonly EcsFilter<SpawnOfficeEvent> spawnOfficeFilter;
     private readonly EcsFilter<OfficeComponent> officeFilter;
 
-    public void Init()
-    {
-        SpawnAll();
-    }
-
     public void Run()
     {
         foreach (var i in spawnOfficeFilter)
         {
-            Spawn();
+            ref var office = ref spawnOfficeFilter.GetEntity(i);
+            Spawn(office);
         }
     }
     
-    private void SpawnAll()
+    private void Spawn(EcsEntity office)
     {
-        foreach (var i in officeFilter)
-        {
-            Object.Instantiate(staticData.officePrefab, sceneData.officeTransform);
-        }
-    }
-    
-    private void Spawn()
-    {
-        var office = Object.Instantiate(staticData.officePrefab, sceneData.officeTransform);
+        var officeObject = Object.Instantiate(staticData.offices[0].prefab, sceneData.officeTransform);
+        officeObject.GetComponent<EntityReference>().entity = office;
     }
 }

@@ -14,6 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   officePrefab: {fileID: 601894154709902627, guid: 01011404ab2d6204e80eab92de228984, type: 3}
   furnitures:
-  - id: 1
+  - title: "\u041E\u0431\u044B\u0447\u043D\u044B\u0439 \u0441\u0442\u043E\u043B"
+    id: 1
     income: 1
     prefab: {fileID: 0}
+  offices:
+  - title: "\u0417\u0430\u0431\u0435\u0433\u0430\u043B\u043E\u0432\u043A\u0430"
+    id: 1
+    size: 2
+    prefab: {fileID: 601894154709902627, guid: 01011404ab2d6204e80eab92de228984, type: 3}
