@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
@@ -8,8 +9,9 @@ sealed class IncomeSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRunSystem
 {
     private readonly EcsWorld _world = null;
     private readonly SceneData sceneData;
+    
     private readonly EcsFilter<IncomeComponent> incomeFilter;
-    private readonly EcsFilter<UpdateIncomeEvent> incomeEventFilter = null;
+    private readonly EcsFilter<UpdateIncomeEvent> incomeEventFilter;
 
     private List<IncomeComponent> incomes = new();
     private WalletComponent wallet;
@@ -18,8 +20,6 @@ sealed class IncomeSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRunSystem
     
     public void Init()
     {
-        UpdateIncomes();
-        
         EcsEntity walletEntity = _world.NewEntity();
         wallet = walletEntity.Get<WalletComponent>();
 
@@ -48,6 +48,7 @@ sealed class IncomeSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRunSystem
 
     private void UpdateIncomes()
     {
+        incomes.Clear();
         foreach (var i in incomeFilter) incomes.Add(incomeFilter.Get1(i));
     }
 

@@ -1,4 +1,3 @@
-using System;
 using Leopotam.Ecs;
 using UnityEngine;
 using Voody.UniLeo;
@@ -13,15 +12,6 @@ public class EcsStartup : MonoBehaviour
     public EcsWorld world;
     public EcsSystems systems;
 
-    private void Awake()
-    {
-        sceneData.buttonCreateOffice.onClick.AddListener((() =>
-        {
-            EcsEntity entity = world.NewEntity();
-            entity.Get<AddOfficeEvent>();
-        }));
-    }
-
     private void Start()
     {
         world = new();
@@ -30,8 +20,8 @@ public class EcsStartup : MonoBehaviour
         systems.ConvertScene();
         
         AddInjections();
-        AddOneFrames();
         AddSystems();
+        AddOneFrames();
         
         systems.Init();
     }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8a770cbe8384e3dbc4d7a5d3df3f186, type: 3}
   m_Name: StaticData
   m_EditorClassIdentifier: 
-  officePrefab: {fileID: 4851332515116478777, guid: 01011404ab2d6204e80eab92de228984, type: 3}
+  officePrefab: {fileID: 601894154709902627, guid: 01011404ab2d6204e80eab92de228984, type: 3}
   furnitures:
   - id: 1
     income: 1
