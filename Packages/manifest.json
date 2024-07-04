@@ -3,6 +3,8 @@
     "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
     "com.leopotam.ecs": "https://github.com/Leopotam/ecs.git",
     "com.leopotam.ecs-unityintegration": "https://github.com/Leopotam/ecs-unityintegration.git",
+    "com.unity.2d.sprite": "1.0.0",
+    "com.unity.2d.tilemap": "1.0.0",
     "com.unity.collab-proxy": "2.4.3",
     "com.unity.feature.development": "1.0.1",
     "com.unity.textmeshpro": "3.0.6",

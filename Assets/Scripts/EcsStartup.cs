@@ -29,8 +29,11 @@ public class EcsStartup : MonoBehaviour
     private void AddSystems()
     {
         systems
+            .Add(new UISystem())
+            .Add(new InputSystem())
             .Add(new OfficeSystem())
             .Add(new OfficeSpawnerSystem())
+            .Add(new OfficeContentSystem())
             .Add(new FurnitureSpawnerSystem())
             .Add(new IncomeSystem());
     }
@@ -47,7 +50,9 @@ public class EcsStartup : MonoBehaviour
         systems
             .OneFrame<AddOfficeEvent>()
             .OneFrame<UpdateIncomeEvent>()
-            .OneFrame<SpawnOfficeEvent>();
+            .OneFrame<SpawnOfficeEvent>()
+            .OneFrame<UITransitionOfficeContentEvent>()
+            .OneFrame<SpawnOfficeContentEvent>();
     }
     
     private void Update()

@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8a770cbe8384e3dbc4d7a5d3df3f186, type: 3}
   m_Name: StaticData
   m_EditorClassIdentifier: 
-  officePrefab: {fileID: 601894154709902627, guid: 01011404ab2d6204e80eab92de228984, type: 3}
   furnitures:
   - title: "\u041E\u0431\u044B\u0447\u043D\u044B\u0439 \u0441\u0442\u043E\u043B"
     id: 1
@@ -23,3 +22,5 @@ MonoBehaviour:
     id: 1
     size: 2
     prefab: {fileID: 601894154709902627, guid: 01011404ab2d6204e80eab92de228984, type: 3}
+  tileFloor: {fileID: 11400000, guid: fe8b01cd5db097c468f2d8bedabe2cea, type: 2}
+  tileHighlight: {fileID: 11400000, guid: 9aaae4285817f834482819f5854b3866, type: 2}

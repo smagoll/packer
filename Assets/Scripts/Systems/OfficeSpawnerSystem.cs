@@ -1,5 +1,6 @@
 using Leopotam.Ecs;
 using UnityEngine;
+using UnityEngine.UI;
 
 sealed class OfficeSpawnerSystem : IEcsRunSystem
 {
@@ -23,5 +24,12 @@ sealed class OfficeSpawnerSystem : IEcsRunSystem
     {
         var officeObject = Object.Instantiate(staticData.offices[0].prefab, sceneData.officeTransform);
         officeObject.GetComponent<EntityReference>().entity = office;
+        
+        officeObject.GetComponent<Button>().onClick.AddListener(() =>
+        {
+            office.Get<UITransitionOfficeContentEvent>();
+            ref var officeContentEvent = ref office.Get<SpawnOfficeContentEvent>();
+            officeContentEvent.size = 2;
+        });
     }
 }

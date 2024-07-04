@@ -15,7 +15,6 @@ sealed class OfficeSystem : IEcsInitSystem, IEcsRunSystem
     public void Init()
     {
         CreateStartOffices(YandexGame.savesData.offices);
-        sceneData.buttonCreateFurniture.onClick.AddListener(() => CreateFurniture(ref officeFilter.Get1(0), 1));
         sceneData.buttonCreateOffice.onClick.AddListener(() => _world.NewEntity().Get<AddOfficeEvent>());
     }
 
