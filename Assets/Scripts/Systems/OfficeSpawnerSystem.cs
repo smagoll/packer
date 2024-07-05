@@ -22,7 +22,7 @@ sealed class OfficeSpawnerSystem : IEcsRunSystem
     
     private void Spawn(EcsEntity office)
     {
-        var officeObject = Object.Instantiate(staticData.offices[0].prefab, sceneData.officeTransform);
+        var officeObject = Object.Instantiate(staticData.offices[0].prefab, sceneData.listOffices);
         officeObject.GetComponent<EntityReference>().entity = office;
         
         officeObject.GetComponent<Button>().onClick.AddListener(() =>

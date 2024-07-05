@@ -1,8 +1,4 @@
-using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using Leopotam.Ecs;
-using UnityEngine;
-using UnityEngine.Tilemaps;
 
 sealed class OfficeContentSystem : IEcsRunSystem
 {
@@ -20,7 +16,7 @@ sealed class OfficeContentSystem : IEcsRunSystem
             var spawnOfficeContentEvent = spawnOfficeContentFilter.Get1(i);
             PaintTiles(spawnOfficeContentEvent.size);
             
-            Debug.Log("content spawn");
+            spawnOfficeContentFilter.GetEntity(i).Get<UITransitionOfficeContentEvent>();
         }
     }
 
@@ -30,13 +26,8 @@ sealed class OfficeContentSystem : IEcsRunSystem
         {
             for (int j = 0; j < size; j++)
             {
-                PaintSingleTile(sceneData.tilemapFloor, staticData.tileFloor, i, j);
+                TileExtensions.PaintSingleTile(sceneData.tilemapFloor, staticData.tileFloor, i, j);
             }
         }
-    }
-    
-    private void PaintSingleTile(Tilemap tilemap, TileBase tile, float x, float y)
-    {
-        tilemap.SetTile(new Vector3Int((int)x, (int)y), tile);
     }
 }

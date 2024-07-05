@@ -29,13 +29,16 @@ public class EcsStartup : MonoBehaviour
     private void AddSystems()
     {
         systems
-            .Add(new UISystem())
             .Add(new InputSystem())
             .Add(new OfficeSystem())
             .Add(new OfficeSpawnerSystem())
             .Add(new OfficeContentSystem())
-            .Add(new FurnitureSpawnerSystem())
-            .Add(new IncomeSystem());
+            .Add(new IncomeSystem())
+            
+            .Add(new HighlightTileSystem())
+            .Add(new UISystem())
+            .Add(new UIFurnitureSpawnerSystem())
+            .Add(new CameraControllerSystem());
     }
 
     private void AddInjections()
@@ -52,7 +55,11 @@ public class EcsStartup : MonoBehaviour
             .OneFrame<UpdateIncomeEvent>()
             .OneFrame<SpawnOfficeEvent>()
             .OneFrame<SpawnOfficeContentEvent>()
-            .OneFrame<UITransitionOfficeContentEvent>();
+            .OneFrame<HighlightTileEvent>()
+            .OneFrame<UITransitionOfficeContentEvent>()
+            .OneFrame<ShowListFurnituresEvent>()
+            .OneFrame<HideListFurnituresEvent>()
+            .OneFrame<UISpawnFurnitureEvent>();
     }
     
     private void Update()

@@ -16,7 +16,7 @@ MonoBehaviour:
   - title: "\u041E\u0431\u044B\u0447\u043D\u044B\u0439 \u0441\u0442\u043E\u043B"
     id: 1
     income: 1
-    prefab: {fileID: 0}
+    prefab: {fileID: 7951671773705077950, guid: a1162323d2644d949940aee41c2f8484, type: 3}
   offices:
   - title: "\u0417\u0430\u0431\u0435\u0433\u0430\u043B\u043E\u0432\u043A\u0430"
     id: 1
