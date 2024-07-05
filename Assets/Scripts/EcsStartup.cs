@@ -51,8 +51,8 @@ public class EcsStartup : MonoBehaviour
             .OneFrame<AddOfficeEvent>()
             .OneFrame<UpdateIncomeEvent>()
             .OneFrame<SpawnOfficeEvent>()
-            .OneFrame<UITransitionOfficeContentEvent>()
-            .OneFrame<SpawnOfficeContentEvent>();
+            .OneFrame<SpawnOfficeContentEvent>()
+            .OneFrame<UITransitionOfficeContentEvent>();
     }
     
     private void Update()

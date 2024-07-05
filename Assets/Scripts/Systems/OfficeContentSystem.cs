@@ -1,9 +1,13 @@
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using Leopotam.Ecs;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 sealed class OfficeContentSystem : IEcsRunSystem
 {
+    private readonly EcsWorld _world;
+    
     private StaticData staticData;
     private SceneData sceneData;
 
@@ -15,6 +19,8 @@ sealed class OfficeContentSystem : IEcsRunSystem
         {
             var spawnOfficeContentEvent = spawnOfficeContentFilter.Get1(i);
             PaintTiles(spawnOfficeContentEvent.size);
+            
+            Debug.Log("content spawn");
         }
     }
 

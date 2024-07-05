@@ -3,7 +3,7 @@ using UnityEngine;
 
 sealed class FurnitureSpawnerSystem : IEcsInitSystem
 {
-    private readonly EcsWorld _world = null;
+    private readonly EcsWorld _world;
     private StaticData staticData;
 
     public void Init()

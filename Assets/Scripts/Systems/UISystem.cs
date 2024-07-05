@@ -1,4 +1,5 @@
 using Leopotam.Ecs;
+using UnityEngine;
 
 sealed class UISystem : IEcsRunSystem
 {
@@ -20,8 +21,5 @@ sealed class UISystem : IEcsRunSystem
     {
         sceneData.canvasMain.SetActive(false);
         sceneData.officeContent.SetActive(true);
-
-        EcsEntity entity = _world.NewEntity();
-        entity.Get<SpawnOfficeContentEvent>();
     }
 }
