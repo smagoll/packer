@@ -1,4 +1,4 @@
-struct UISpawnFurnitureEvent
+struct SpawnFurnitureEvent
 {
     public int id;
 }

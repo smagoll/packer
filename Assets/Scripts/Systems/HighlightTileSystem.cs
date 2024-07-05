@@ -1,12 +1,21 @@
 using Leopotam.Ecs;
 
-sealed class HighlightTileSystem : IEcsRunSystem
+sealed class HighlightTileSystem : IEcsRunSystem, IEcsInitSystem
 {
     private readonly EcsWorld world;
     private readonly EcsFilter<HighlightTileEvent> highlightTileEventFilter;
 
     private readonly SceneData sceneData;
     private readonly StaticData staticData;
+
+    private EcsEntity highlightEntity;
+    
+    public void Init()
+    {
+        highlightEntity = world.NewEntity();
+        highlightEntity.Get<PositionComponent>();
+        highlightEntity.Get<HighlightTileComponent>();
+    }
     
     public void Run()
     {
@@ -24,16 +33,15 @@ sealed class HighlightTileSystem : IEcsRunSystem
             { 
                 sceneData.tilemapHighlight.ClearAllTiles();
                 TileExtensions.PaintSingleTile(sceneData.tilemapHighlight, staticData.tileHighlight, tpos.x , tpos.y);
-
-                EcsEntity entity = world.NewEntity();
-                entity.Get<ShowListFurnituresEvent>();
+                
+                highlightEntity.Get<ShowListFurnituresEvent>();
+                highlightEntity.Get<PositionComponent>().position = tpos;
             }
             else
             {
                 sceneData.tilemapHighlight.ClearAllTiles();
                 
-                EcsEntity entity = world.NewEntity();
-                entity.Get<HideListFurnituresEvent>();
+                highlightEntity.Get<HideListFurnituresEvent>();
             }
         }
     }

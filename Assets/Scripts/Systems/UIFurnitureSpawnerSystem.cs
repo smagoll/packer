@@ -28,6 +28,12 @@ sealed class UIFurnitureSpawnerSystem : IEcsRunSystem
 
     private void Spawn(FurnitureIncomeData furniture)
     {
-        Object.Instantiate(staticData.furnitures[0].prefab, sceneData.listFurnitures);
+        var furnitureObject = Object.Instantiate(staticData.furnitures[0].prefab, sceneData.listFurnitures);
+        furnitureObject.GetComponent<Button>().onClick.AddListener(() =>
+        {
+            EcsEntity entity = _world.NewEntity();
+            ref var spawnFurnitureComponent = ref entity.Get<SpawnFurnitureEvent>();
+            spawnFurnitureComponent.id = furniture.id;
+        });
     }
 }
