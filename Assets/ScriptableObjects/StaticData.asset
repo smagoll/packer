@@ -16,11 +16,14 @@ MonoBehaviour:
   - title: "\u041E\u0431\u044B\u0447\u043D\u044B\u0439 \u0441\u0442\u043E\u043B"
     id: 1
     income: 1
+    price: 50
     prefab: {fileID: 7951671773705077950, guid: a1162323d2644d949940aee41c2f8484, type: 3}
+    prefabTile: {fileID: 11400000, guid: 707e10218c747e443b2c91550b5b504a, type: 2}
   offices:
   - title: "\u0417\u0430\u0431\u0435\u0433\u0430\u043B\u043E\u0432\u043A\u0430"
     id: 1
     size: 2
+    price: 100
     prefab: {fileID: 601894154709902627, guid: 01011404ab2d6204e80eab92de228984, type: 3}
   tileFloor: {fileID: 11400000, guid: fe8b01cd5db097c468f2d8bedabe2cea, type: 2}
   tileHighlight: {fileID: 11400000, guid: 9aaae4285817f834482819f5854b3866, type: 2}

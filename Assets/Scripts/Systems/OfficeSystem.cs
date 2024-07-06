@@ -11,6 +11,7 @@ sealed class OfficeSystem : IEcsInitSystem, IEcsRunSystem
     
     private readonly EcsFilter<AddOfficeEvent> addOfficeFilter;
     private readonly EcsFilter<OfficeComponent> officeFilter;
+    private readonly EcsFilter<OfficeComponent, SpawnFurnitureEvent, Opened> officeOpenFilter;
     
     public void Init()
     {
@@ -24,6 +25,14 @@ sealed class OfficeSystem : IEcsInitSystem, IEcsRunSystem
         {
             CreateOffice();
         }
+
+        foreach (var i in officeOpenFilter)
+        {
+            ref var officeComponent = ref officeOpenFilter.Get1(i);
+            ref var spawnFurnitureEvent = ref officeOpenFilter.Get2(i);
+            
+            CreateFurniture(ref officeComponent, spawnFurnitureEvent.id, new Vector2(0,0));
+        }
     }
     
     private void CreateStartOffices(OfficeSave[] officeSaves)
@@ -31,14 +40,15 @@ sealed class OfficeSystem : IEcsInitSystem, IEcsRunSystem
         foreach (var startOffice in officeSaves)
         {
             var office = CreateOffice();
+            ref var officeComponent = ref office.Get<OfficeComponent>();
             foreach (var furniture in startOffice.furnitures)
             {
-                CreateFurniture(ref office, furniture.id, furniture.position);
+                CreateFurniture(ref officeComponent, furniture.id, furniture.position);
             }
         }
     }
     
-    public OfficeComponent CreateOffice()
+    public EcsEntity CreateOffice()
     {
         EcsEntity office = _world.NewEntity();
         ref var officeComponent = ref office.Get<OfficeComponent>();
@@ -46,7 +56,7 @@ sealed class OfficeSystem : IEcsInitSystem, IEcsRunSystem
         officeComponent.id = 1;
         
         Debug.Log("add office");
-        return officeComponent;
+        return office;
     }
 
     public void CreateFurniture(ref OfficeComponent office, int id, Vector2 position)
@@ -61,8 +71,8 @@ sealed class OfficeSystem : IEcsInitSystem, IEcsRunSystem
         furnitureComponent.id = id;
         incomeComponent.income = staticData.furnitures.FirstOrDefault(x => x.id == id).income;
         
-        if (office.Furnitures == null) office.Furnitures = new();
-        office.Furnitures.Add(furniture);
+        if (office.furnitures == null) office.furnitures = new();
+        office.furnitures.Add(furniture);
 
         furniture.Get<UpdateIncomeEvent>();
         

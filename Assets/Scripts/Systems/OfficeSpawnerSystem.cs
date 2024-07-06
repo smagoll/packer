@@ -8,8 +8,7 @@ sealed class OfficeSpawnerSystem : IEcsRunSystem
     private StaticData staticData;
     private SceneData sceneData;
 
-    private readonly EcsFilter<SpawnOfficeEvent> spawnOfficeFilter;
-    private readonly EcsFilter<OfficeComponent> officeFilter;
+    private readonly EcsFilter<OfficeComponent, SpawnOfficeEvent> spawnOfficeFilter;
 
     public void Run()
     {
@@ -27,7 +26,8 @@ sealed class OfficeSpawnerSystem : IEcsRunSystem
         
         officeObject.GetComponent<Button>().onClick.AddListener(() =>
         {
-            ref var officeContentEvent = ref office.Get<SpawnOfficeContentEvent>();
+            ref var officeContentEvent = ref office.Get<SpawnContentEvent>();
+            office.Get<Opened>();
             officeContentEvent.size = 2;
         });
     }

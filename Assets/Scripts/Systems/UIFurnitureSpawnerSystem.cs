@@ -1,3 +1,4 @@
+using System.Linq;
 using Leopotam.Ecs;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,7 +9,10 @@ sealed class UIFurnitureSpawnerSystem : IEcsRunSystem
     private readonly StaticData staticData;
     private readonly SceneData sceneData;
 
+    private readonly EcsFilter<WalletComponent> walletFilter;
     private readonly EcsFilter<UISpawnFurnitureEvent> uiSpawnFurnitureFilter;
+    private readonly EcsFilter<OfficeComponent, Opened> officeOpenFilter;
+    private readonly EcsFilter<HighlightTileComponent, PositionComponent> highlightFilter;
 
     public void Run()
     {
@@ -22,7 +26,6 @@ sealed class UIFurnitureSpawnerSystem : IEcsRunSystem
             foreach (var furniture in staticData.furnitures)
             {
                 Spawn(furniture);
-                Debug.Log($"spawn {furniture.title}");  
             }
         }
     }
@@ -32,9 +35,28 @@ sealed class UIFurnitureSpawnerSystem : IEcsRunSystem
         var furnitureObject = Object.Instantiate(staticData.furnitures[0].prefab, sceneData.listFurnitures);
         furnitureObject.GetComponent<Button>().onClick.AddListener(() =>
         {
-            EcsEntity entity = _world.NewEntity();
+            var pos = highlightFilter.Get2(0).position;
+            if (!TileExtensions.CheckTile(sceneData.tilemapFurniture, pos))
+            {
+                BuyFurniture(furniture);
+            }
+            else
+            {
+                Debug.Log("cant buy");
+            }
+        });
+    }
+
+    private void BuyFurniture(FurnitureIncomeData furniture)
+    {
+        var furnitureData = staticData.furnitures.FirstOrDefault(x => x.id == furniture.id);
+        ref var money = ref walletFilter.Get1(0).money;
+        if (money >= furnitureData.price)
+        {
+            money -= furnitureData.price;
+            var entity = officeOpenFilter.GetEntity(0);
             ref var spawnFurnitureComponent = ref entity.Get<SpawnFurnitureEvent>();
             spawnFurnitureComponent.id = furniture.id;
-        });
+        }
     }
 }

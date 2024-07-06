@@ -6,6 +6,6 @@ using Leopotam.Ecs;
 public struct OfficeComponent
 {
     public int id;
-    public List<EcsEntity> Furnitures;
+    public List<EcsEntity> furnitures;
     public int size;
 }

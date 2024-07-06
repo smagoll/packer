@@ -1,13 +1,13 @@
 using Leopotam.Ecs;
 
-sealed class OfficeContentSystem : IEcsRunSystem
+sealed class ContentSystem : IEcsRunSystem
 {
     private readonly EcsWorld _world;
     
     private StaticData staticData;
     private SceneData sceneData;
 
-    private readonly EcsFilter<OfficeComponent, SpawnOfficeContentEvent> spawnOfficeContentFilter;
+    private readonly EcsFilter<OfficeComponent, SpawnContentEvent> spawnOfficeContentFilter;
     
     public void Run()
     {
@@ -18,7 +18,6 @@ sealed class OfficeContentSystem : IEcsRunSystem
             
             var office = spawnOfficeContentFilter.GetEntity(i);
             office.Get<UITransitionOfficeContentEvent>();
-            office.Get<SpawnFurnitureStartEvent>();
         }
     }
 

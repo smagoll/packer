@@ -4,27 +4,30 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using Leopotam.Ecs;
 using UnityEngine;
+using YG;
 
-sealed class IncomeSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRunSystem
+sealed class IncomeSystem : IEcsInitSystem, IEcsRunSystem
 {
-    private readonly EcsWorld _world = null;
+    private readonly EcsWorld world;
     private readonly SceneData sceneData;
-    
+
+    private readonly EcsFilter<SpawnFurnitureEvent> spawnFurnitureEventFilter;
     private readonly EcsFilter<IncomeComponent> incomeFilter;
+    private readonly EcsFilter<WalletComponent> walletFilter;
     private readonly EcsFilter<UpdateIncomeEvent> incomeEventFilter;
 
     private List<IncomeComponent> incomes = new();
-    private WalletComponent wallet;
 
     private bool isRun;
+    private float lastTime;
+    private float intervalTime = 1f;
     
     public void Init()
     {
-        EcsEntity walletEntity = _world.NewEntity();
-        wallet = walletEntity.Get<WalletComponent>();
-
-        isRun = true;
-        Income().Forget();
+        EcsEntity walletEntity = world.NewEntity();
+        ref var walletComponent = ref walletEntity.Get<WalletComponent>();
+        walletComponent.money = YandexGame.savesData.money;
+        sceneData.money.text = walletComponent.money.ToString();
     }
 
     public void Run()
@@ -32,17 +35,21 @@ sealed class IncomeSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRunSystem
         foreach (var i in incomeEventFilter)
         {
             UpdateIncomes();
-            Debug.Log("update income");
         }
-    }
-    
-    private async UniTaskVoid Income()
-    {
-        while (isRun)
+
+        foreach (var i in spawnFurnitureEventFilter)
         {
+            var money = walletFilter.Get1(0).money;
+            sceneData.money.text = money.ToString();
+        }
+
+        if (Time.time - lastTime > intervalTime)
+        {
+            ref var wallet = ref walletFilter.Get1(0);
             wallet.money += incomes.Sum(x => x.income);
             sceneData.money.text = wallet.money.ToString();
-            await UniTask.Delay(1000);
+            
+            lastTime = Time.time;
         }
     }
 
@@ -50,11 +57,5 @@ sealed class IncomeSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRunSystem
     {
         incomes.Clear();
         foreach (var i in incomeFilter) incomes.Add(incomeFilter.Get1(i));
-    }
-
-
-    public void Destroy()
-    {
-        isRun = false;
     }
 }

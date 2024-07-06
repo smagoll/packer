@@ -12,9 +12,7 @@ sealed class HighlightTileSystem : IEcsRunSystem, IEcsInitSystem
     
     public void Init()
     {
-        highlightEntity = world.NewEntity();
-        highlightEntity.Get<PositionComponent>();
-        highlightEntity.Get<HighlightTileComponent>();
+        CreateHighlight();
     }
     
     public void Run()
@@ -44,5 +42,12 @@ sealed class HighlightTileSystem : IEcsRunSystem, IEcsInitSystem
                 highlightEntity.Get<HideListFurnituresEvent>();
             }
         }
+    }
+
+    private void CreateHighlight()
+    {
+        highlightEntity = world.NewEntity();
+        highlightEntity.Get<PositionComponent>();
+        highlightEntity.Get<HighlightTileComponent>();
     }
 }

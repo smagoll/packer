@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
@@ -11,7 +10,9 @@ public class SceneData : MonoBehaviour
     public GameObject canvasMain;
     public GameObject canvasContent;
     public GameObject officeContent;
+    public GameObject furnitureWindow;
     public Button buttonCreateOffice;
+    public Button buttonBackToMain;
     public TextMeshProUGUI money;
 
     [Header("Tilemaps")]

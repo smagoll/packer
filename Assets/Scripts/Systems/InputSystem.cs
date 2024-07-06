@@ -53,6 +53,12 @@ sealed class InputSystem : IEcsRunSystem
                     highlightEvent.worldPoint = worldPoint;
                 }
             }
+            else
+            {
+                sceneData.tilemapHighlight.ClearAllTiles();
+                
+                world.NewEntity().Get<HideListFurnituresEvent>();
+            }
 
             selectedTile = null;
             

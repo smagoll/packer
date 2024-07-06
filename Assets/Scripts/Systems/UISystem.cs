@@ -1,21 +1,29 @@
 using Leopotam.Ecs;
 using UnityEngine;
 
-sealed class UISystem : IEcsRunSystem
+sealed class UISystem : IEcsRunSystem, IEcsInitSystem
 {
     private readonly EcsWorld _world;
     private StaticData staticData;
     private SceneData sceneData;
 
+    private readonly EcsFilter<OfficeComponent, Opened> officeOpenedFilter;
+    private readonly EcsFilter<HighlightTileComponent, PositionComponent> highlightFilter;
     private readonly EcsFilter<UITransitionOfficeContentEvent> uiTransitionOfficeContentEvent;
     private readonly EcsFilter<ShowListFurnituresEvent> showListFurnituresEventFilter;
     private readonly EcsFilter<HideListFurnituresEvent> hideListFurnituresEventFilter;
+
+    public void Init()
+    {
+        sceneData.buttonBackToMain.onClick.AddListener(ButtonBack);
+    }
     
     public void Run()
     {
         foreach (var i in uiTransitionOfficeContentEvent)
         {
-            TransitionToOfficeContent();
+            TransitionToContent();
+            HideListFurnitures();
         }
 
         foreach (var i in showListFurnituresEventFilter)
@@ -29,17 +37,18 @@ sealed class UISystem : IEcsRunSystem
         }
     }
 
-    private void TransitionToOfficeContent()
+    private void TransitionToContent()
     {
         sceneData.canvasMain.SetActive(false);
+        sceneData.canvasContent.SetActive(true);
         sceneData.officeContent.SetActive(true);
     }
 
     private void ShowListFurnitures()
     {
-        if (!sceneData.canvasContent.activeSelf)
+        if (!sceneData.furnitureWindow.activeSelf)
         {
-            sceneData.canvasContent.SetActive(true);
+            sceneData.furnitureWindow.SetActive(true);
             EcsEntity entity = _world.NewEntity();
             entity.Get<UISpawnFurnitureEvent>();
         }
@@ -47,9 +56,21 @@ sealed class UISystem : IEcsRunSystem
     
     private void HideListFurnitures()
     {
-        if (sceneData.canvasContent.activeSelf)
+        if (sceneData.furnitureWindow.activeSelf)
         {
-            sceneData.canvasContent.SetActive(false);
+            sceneData.furnitureWindow.SetActive(false);
         }
+    }
+
+    private void ButtonBack()
+    {
+        ref var office = ref officeOpenedFilter.GetEntity(0);
+        office.Del<Opened>();
+        
+        HideListFurnitures();
+        
+        sceneData.canvasMain.SetActive(true);
+        sceneData.canvasContent.SetActive(false);
+        sceneData.officeContent.SetActive(false);
     }
 }
