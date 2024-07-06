@@ -27,7 +27,6 @@ sealed class OfficeSpawnerSystem : IEcsRunSystem
         
         officeObject.GetComponent<Button>().onClick.AddListener(() =>
         {
-            //office.Get<UITransitionOfficeContentEvent>();
             ref var officeContentEvent = ref office.Get<SpawnOfficeContentEvent>();
             officeContentEvent.size = 2;
         });

@@ -14,6 +14,6 @@ namespace YG
 
         public int money;
 
-        public OfficeSave[] offices = { new OfficeSave(new Vector2(1, 1), new[] { new FurnitureSave(1) }) };
+        public OfficeSave[] offices = { new OfficeSave(1, new[] { new FurnitureSave(1, new Vector2(0,0)) }) };
     }
 }

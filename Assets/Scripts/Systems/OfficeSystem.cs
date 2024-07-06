@@ -22,7 +22,7 @@ sealed class OfficeSystem : IEcsInitSystem, IEcsRunSystem
     {
         foreach (var i in addOfficeFilter)
         {
-            CreateOffice(addOfficeFilter.Get1(i).position);
+            CreateOffice();
         }
     }
     
@@ -30,39 +30,39 @@ sealed class OfficeSystem : IEcsInitSystem, IEcsRunSystem
     {
         foreach (var startOffice in officeSaves)
         {
-            var office = CreateOffice(startOffice.position);
+            var office = CreateOffice();
             foreach (var furniture in startOffice.furnitures)
             {
-                CreateFurniture(ref office, furniture.id);
+                CreateFurniture(ref office, furniture.id, furniture.position);
             }
         }
     }
     
-    public OfficeComponent CreateOffice(Vector2 position)
+    public OfficeComponent CreateOffice()
     {
         EcsEntity office = _world.NewEntity();
         ref var officeComponent = ref office.Get<OfficeComponent>();
-        ref var positionComponent = ref office.Get<PositionComponent>();
         office.Get<SpawnOfficeEvent>();
-
-        positionComponent.position = position;
+        officeComponent.id = 1;
         
         Debug.Log("add office");
         return officeComponent;
     }
 
-    public void CreateFurniture(ref OfficeComponent office, int id)
+    public void CreateFurniture(ref OfficeComponent office, int id, Vector2 position)
     {
         EcsEntity furniture = _world.NewEntity();
         ref var furnitureComponent = ref furniture.Get<FurnitureComponent>();
         ref var incomeComponent = ref furniture.Get<IncomeComponent>();
+        ref var positionComponent = ref furniture.Get<PositionComponent>();
         furniture.Get<LevelComponent>();
 
+        positionComponent.position = position;
         furnitureComponent.id = id;
         incomeComponent.income = staticData.furnitures.FirstOrDefault(x => x.id == id).income;
         
         if (office.Furnitures == null) office.Furnitures = new();
-        office.Furnitures.Add(furnitureComponent);
+        office.Furnitures.Add(furniture);
 
         furniture.Get<UpdateIncomeEvent>();
         

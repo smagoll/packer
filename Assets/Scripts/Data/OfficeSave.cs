@@ -2,12 +2,12 @@ using UnityEngine;
 
 public struct OfficeSave
 {
-    public Vector2 position;
+    public int id;
     public FurnitureSave[] furnitures;
 
-    public OfficeSave(Vector2 position, FurnitureSave[] furnitures)
+    public OfficeSave(int id, FurnitureSave[] furnitures)
     {
-        this.position = position;
+        this.id = id;
         this.furnitures = furnitures;
     }
 }

@@ -18,6 +18,7 @@ sealed class UIFurnitureSpawnerSystem : IEcsRunSystem
             {
                 Object.Destroy(furniture.gameObject);
             }
+            
             foreach (var furniture in staticData.furnitures)
             {
                 Spawn(furniture);

@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using Leopotam.Ecs;
 
 [Serializable]
 public struct OfficeComponent
 {
-    public List<FurnitureComponent> Furnitures;
+    public int id;
+    public List<EcsEntity> Furnitures;
     public int size;
 }

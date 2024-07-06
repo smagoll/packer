@@ -7,16 +7,18 @@ sealed class OfficeContentSystem : IEcsRunSystem
     private StaticData staticData;
     private SceneData sceneData;
 
-    private readonly EcsFilter<SpawnOfficeContentEvent> spawnOfficeContentFilter;
+    private readonly EcsFilter<OfficeComponent, SpawnOfficeContentEvent> spawnOfficeContentFilter;
     
     public void Run()
     {
         foreach (var i in spawnOfficeContentFilter)
         {
-            var spawnOfficeContentEvent = spawnOfficeContentFilter.Get1(i);
+            var spawnOfficeContentEvent = spawnOfficeContentFilter.Get2(i);
             PaintTiles(spawnOfficeContentEvent.size);
             
-            spawnOfficeContentFilter.GetEntity(i).Get<UITransitionOfficeContentEvent>();
+            var office = spawnOfficeContentFilter.GetEntity(i);
+            office.Get<UITransitionOfficeContentEvent>();
+            office.Get<SpawnFurnitureStartEvent>();
         }
     }
 
