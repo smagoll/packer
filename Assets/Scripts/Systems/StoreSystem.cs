@@ -11,15 +11,18 @@ sealed class StoreSystem : IEcsRunSystem
     private readonly StaticData staticData;
 
     private readonly EcsFilter<OpenStoreEvent> openStoreEventFilter;
+    private readonly EcsFilter<SwitchMainStoreEvent> switchMainStoreEventFilter;
     private readonly EcsFilter<WalletComponent> walletFilter;
     
     public void Run()
     {
         foreach (var i in openStoreEventFilter)
         {
-            foreach (Transform furniture in sceneData.listFurnitures)
+            SwitchMainStore(true);
+            
+            foreach (Transform office in sceneData.listOfficesStore)
             {
-                Object.Destroy(furniture.gameObject);
+                Object.Destroy(office.gameObject);
             }
             
             foreach (var office in staticData.offices)
@@ -27,11 +30,19 @@ sealed class StoreSystem : IEcsRunSystem
                 Spawn(office);
             }
         }
+
+        foreach (var i in switchMainStoreEventFilter)
+        {
+            SwitchMainStore(switchMainStoreEventFilter.Get1(i).isSwitch);
+        }
     }
     
     private void Spawn(OfficeSizeData office)
     {
-        var officeObject = Object.Instantiate(office.prefabStore, sceneData.listOfficesStore);
+        var officeObject = Object.Instantiate(staticData.prefabOfficeUI, sceneData.listOfficesStore);
+
+        var storeCell = officeObject.GetComponent<StoreCell>();
+        storeCell.textPrice.text = office.price.ToString();
         
         officeObject.GetComponent<Button>().onClick.AddListener(() =>
         {
@@ -49,12 +60,25 @@ sealed class StoreSystem : IEcsRunSystem
             ref var addOfficeEvent = ref world.NewEntity().Get<AddOfficeEvent>();
             addOfficeEvent.officeType = office.officeType;
             
-            sceneData.storeWindow.SetActive(false);
+            SwitchMainStore(false);
         }
         else
         {
             world.NewEntity().Get<FailBuyEvent>();
-            Debug.Log("no money");
+        }
+    }
+
+    private void SwitchMainStore(bool isSwitch)
+    {
+        if (isSwitch)
+        {
+            sceneData.storeWindow.SetActive(true);
+            sceneData.buttonBuyOffice.gameObject.SetActive(false);
+        }
+        else
+        {
+            sceneData.storeWindow.SetActive(false);
+            sceneData.buttonBuyOffice.gameObject.SetActive(true);
         }
     }
 }

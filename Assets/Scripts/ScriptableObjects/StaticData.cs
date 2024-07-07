@@ -10,4 +10,8 @@ public class StaticData : ScriptableObject
     [Header("Tiles")]
     public Tile tileFloor;
     public Tile tileHighlight;
+    
+    [Header("Prefabs")]
+    public GameObject prefabOfficeUI;
+    public GameObject prefabFurnitureUI;
 }

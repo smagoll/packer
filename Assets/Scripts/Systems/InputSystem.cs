@@ -56,12 +56,10 @@ sealed class InputSystem : IEcsRunSystem
             else
             {
                 sceneData.tilemapHighlight.ClearAllTiles();
-                
                 world.NewEntity().Get<HideListFurnituresEvent>();
             }
 
             selectedTile = null;
-            
             entityCam.Destroy();
         }
     }

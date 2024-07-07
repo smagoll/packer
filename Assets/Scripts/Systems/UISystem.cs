@@ -15,7 +15,8 @@ sealed class UISystem : IEcsRunSystem, IEcsInitSystem
 
     public void Init()
     {
-        sceneData.buttonBackToMain.onClick.AddListener(ButtonBack);
+        sceneData.buttonBackStoreToMain.onClick.AddListener(ButtonBackStoreToMain);
+        sceneData.buttonBackContentToMain.onClick.AddListener(ButtonBackContentToMain);
         sceneData.buttonBuyOffice.onClick.AddListener(ShowStore);
     }
     
@@ -63,7 +64,13 @@ sealed class UISystem : IEcsRunSystem, IEcsInitSystem
         }
     }
 
-    private void ButtonBack()
+    private void ButtonBackStoreToMain()
+    {
+        ref var switchEvent = ref _world.NewEntity().Get<SwitchMainStoreEvent>();
+        switchEvent.isSwitch = false;
+    }
+    
+    private void ButtonBackContentToMain()
     {
         ref var office = ref officeOpenedFilter.GetEntity(0);
         office.Del<Opened>();
@@ -78,8 +85,6 @@ sealed class UISystem : IEcsRunSystem, IEcsInitSystem
 
     private void ShowStore()
     {
-        sceneData.storeWindow.SetActive(true);
-
         _world.NewEntity().Get<OpenStoreEvent>();
     }
 }

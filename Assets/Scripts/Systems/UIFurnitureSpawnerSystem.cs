@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 sealed class UIFurnitureSpawnerSystem : IEcsRunSystem
 {
-    private readonly EcsWorld _world;
+    private readonly EcsWorld world;
     private readonly StaticData staticData;
     private readonly SceneData sceneData;
 
@@ -32,7 +32,11 @@ sealed class UIFurnitureSpawnerSystem : IEcsRunSystem
 
     private void Spawn(FurnitureIncomeData furniture)
     {
-        var furnitureObject = Object.Instantiate(staticData.furnitures[0].prefab, sceneData.listFurnitures);
+        var furnitureObject = Object.Instantiate(staticData.prefabFurnitureUI, sceneData.listFurnitures);
+        
+        var storeCell = furnitureObject.GetComponent<StoreCell>();
+        storeCell.textPrice.text = furniture.price.ToString();
+
         furnitureObject.GetComponent<Button>().onClick.AddListener(() =>
         {
             var pos = highlightFilter.Get2(0).position;
@@ -42,8 +46,7 @@ sealed class UIFurnitureSpawnerSystem : IEcsRunSystem
             }
             else
             {
-                _world.NewEntity().Get<FailBuyEvent>();
-                Debug.Log("cant buy");
+                world.NewEntity().Get<FailBuyEvent>();
             }
         });
     }
@@ -58,6 +61,10 @@ sealed class UIFurnitureSpawnerSystem : IEcsRunSystem
             var entity = officeOpenFilter.GetEntity(0);
             ref var spawnFurnitureComponent = ref entity.Get<SpawnFurnitureEvent>();
             spawnFurnitureComponent.id = furniture.id;
+        }
+        else
+        {
+            world.NewEntity().Get<FailBuyEvent>();
         }
     }
 }

@@ -9,5 +9,4 @@ public struct OfficeSizeData
     public int size;
     public int price;
     public GameObject prefab;
-    public GameObject prefabStore;
 }

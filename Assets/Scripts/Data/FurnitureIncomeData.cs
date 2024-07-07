@@ -9,6 +9,5 @@ public struct FurnitureIncomeData
     public int id;
     public int income;
     public int price;
-    public GameObject prefab;
     public Tile prefabTile;
 }

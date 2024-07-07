@@ -65,11 +65,10 @@ public class EcsStartup : MonoBehaviour
 
             .OneFrame<HighlightTileEvent>()
             .OneFrame<OpenStoreEvent>()
+            .OneFrame<SwitchMainStoreEvent>()
             .OneFrame<ShowListFurnituresEvent>()
             .OneFrame<HideListFurnituresEvent>()
             .OneFrame<UISpawnFurnitureEvent>();
-
-
     }
     
     private void Update()
