@@ -1,13 +1,15 @@
-using UnityEngine;
+using System.Collections.Generic;
 
 public struct OfficeSave
 {
     public int id;
-    public FurnitureSave[] furnitures;
+    public OfficeType officeType;
+    public List<FurnitureSave> furnitures;
 
-    public OfficeSave(int id, FurnitureSave[] furnitures)
+    public OfficeSave(int id, OfficeType officeType)
     {
         this.id = id;
-        this.furnitures = furnitures;
+        this.officeType = officeType;
+        furnitures = new();
     }
 }

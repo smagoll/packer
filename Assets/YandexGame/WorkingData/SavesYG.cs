@@ -1,4 +1,5 @@
 ﻿
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace YG
@@ -6,7 +7,6 @@ namespace YG
     [System.Serializable]
     public class SavesYG
     {
-        // "Технические сохранения" для работы плагина (Не удалять)
         public int idSave;
         public bool isFirstSession = true;
         public string language = "ru";
@@ -14,6 +14,12 @@ namespace YG
 
         public int money = 100;
 
-        public OfficeSave[] offices = { new OfficeSave(1, new[] { new FurnitureSave(1, new Vector2(0,0)) }) };
+        public List<OfficeSave> offices;
+
+        public SavesYG()
+        {
+            offices = new();
+            offices.Add(new OfficeSave(0, OfficeType.Common));
+        }
     }
 }

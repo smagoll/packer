@@ -1,11 +1,13 @@
+using System.Collections.Generic;
 using System.Linq;
 using Leopotam.Ecs;
+using Unity.VisualScripting;
 using UnityEngine;
 using YG;
 
 sealed class OfficeSystem : IEcsInitSystem, IEcsRunSystem
 {
-    private readonly EcsWorld _world;
+    private readonly EcsWorld world;
     private readonly StaticData staticData;
     private readonly SceneData sceneData;
     
@@ -23,8 +25,13 @@ sealed class OfficeSystem : IEcsInitSystem, IEcsRunSystem
     {
         foreach (var i in addOfficeFilter)
         {
-            var id = addOfficeFilter.Get1(i).id;
-            CreateOffice(id);
+            var officeType = addOfficeFilter.Get1(i).officeType;
+            int id = 0;
+            if (YandexGame.savesData.offices.Count > 0)
+            {
+                id = YandexGame.savesData.offices.Max(x => x.id) + 1;
+            }
+            CreateOffice(id, officeType);
         }
 
         foreach (var i in officeOpenFilter)
@@ -37,11 +44,11 @@ sealed class OfficeSystem : IEcsInitSystem, IEcsRunSystem
         }
     }
     
-    private void CreateStartOffices(OfficeSave[] officeSaves)
+    private void CreateStartOffices(List<OfficeSave> officeSaves)
     {
         foreach (var startOffice in officeSaves)
         {
-            var office = CreateOffice(startOffice.id);
+            var office = CreateOffice(startOffice.id, startOffice.officeType);
             ref var officeComponent = ref office.Get<OfficeComponent>();
             foreach (var furniture in startOffice.furnitures)
             {
@@ -50,18 +57,26 @@ sealed class OfficeSystem : IEcsInitSystem, IEcsRunSystem
         }
     }
     
-    public EcsEntity CreateOffice(int id)
+    private EcsEntity CreateOffice(int id, OfficeType officeType)
     {
-        EcsEntity office = _world.NewEntity();
+        EcsEntity office = world.NewEntity();
         ref var officeComponent = ref office.Get<OfficeComponent>();
         office.Get<SpawnOfficeEvent>();
         officeComponent.id = id;
+        officeComponent.officeType = officeType;
+        
+        if(!YandexGame.savesData.offices.Exists(x => x.id == id))
+        {
+            YandexGame.savesData.offices.Add(new(id, officeType));
+            Debug.Log("save");
+        };
+        
         return office;
     }
 
-    public void CreateFurniture(ref OfficeComponent office, int id, Vector2 position)
+    private void CreateFurniture(ref OfficeComponent office, int id, Vector2 position)
     {
-        EcsEntity furniture = _world.NewEntity();
+        EcsEntity furniture = world.NewEntity();
         ref var furnitureComponent = ref furniture.Get<FurnitureComponent>();
         ref var incomeComponent = ref furniture.Get<IncomeComponent>();
         ref var positionComponent = ref furniture.Get<PositionComponent>();

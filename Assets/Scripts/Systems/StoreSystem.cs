@@ -2,6 +2,7 @@ using System.Linq;
 using Leopotam.Ecs;
 using UnityEngine;
 using UnityEngine.UI;
+using YG;
 
 sealed class StoreSystem : IEcsRunSystem
 {
@@ -40,13 +41,13 @@ sealed class StoreSystem : IEcsRunSystem
 
     private void BuyOffice(OfficeSizeData office)
     {
-        var officeData = staticData.offices.FirstOrDefault(x => x.id == office.id);
+        var officeData = staticData.offices.FirstOrDefault(x => x.officeType == office.officeType);
         ref var money = ref walletFilter.Get1(0).money;
         if (money >= officeData.price)
         {
             money -= officeData.price;
             ref var addOfficeEvent = ref world.NewEntity().Get<AddOfficeEvent>();
-            addOfficeEvent.id = office.id;
+            addOfficeEvent.officeType = office.officeType;
             
             sceneData.storeWindow.SetActive(false);
         }

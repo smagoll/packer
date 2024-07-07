@@ -1,4 +1,4 @@
 struct AddOfficeEvent
 {
-    public int id;
+    public OfficeType officeType;
 }
