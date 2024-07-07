@@ -8,14 +8,15 @@ sealed class UISystem : IEcsRunSystem, IEcsInitSystem
     private SceneData sceneData;
 
     private readonly EcsFilter<OfficeComponent, Opened> officeOpenedFilter;
-    private readonly EcsFilter<HighlightTileComponent, PositionComponent> highlightFilter;
-    private readonly EcsFilter<UITransitionOfficeContentEvent> uiTransitionOfficeContentEvent;
+    private readonly EcsFilter<HighlightComponent, PositionComponent> highlightFilter;
+    private readonly EcsFilter<OfficeComponent, SpawnContentEvent> uiTransitionOfficeContentEvent;
     private readonly EcsFilter<ShowListFurnituresEvent> showListFurnituresEventFilter;
     private readonly EcsFilter<HideListFurnituresEvent> hideListFurnituresEventFilter;
 
     public void Init()
     {
         sceneData.buttonBackToMain.onClick.AddListener(ButtonBack);
+        sceneData.buttonBuyOffice.onClick.AddListener(ShowStore);
     }
     
     public void Run()
@@ -72,5 +73,12 @@ sealed class UISystem : IEcsRunSystem, IEcsInitSystem
         sceneData.canvasMain.SetActive(true);
         sceneData.canvasContent.SetActive(false);
         sceneData.officeContent.SetActive(false);
+    }
+
+    private void ShowStore()
+    {
+        sceneData.storeWindow.SetActive(true);
+
+        _world.NewEntity().Get<OpenStoreEvent>();
     }
 }

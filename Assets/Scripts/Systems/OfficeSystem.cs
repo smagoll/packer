@@ -16,14 +16,14 @@ sealed class OfficeSystem : IEcsInitSystem, IEcsRunSystem
     public void Init()
     {
         CreateStartOffices(YandexGame.savesData.offices);
-        sceneData.buttonCreateOffice.onClick.AddListener(() => _world.NewEntity().Get<AddOfficeEvent>());
     }
 
     public void Run()
     {
         foreach (var i in addOfficeFilter)
         {
-            CreateOffice();
+            var id = addOfficeFilter.Get1(i).id;
+            CreateOffice(id);
         }
 
         foreach (var i in officeOpenFilter)
@@ -39,7 +39,7 @@ sealed class OfficeSystem : IEcsInitSystem, IEcsRunSystem
     {
         foreach (var startOffice in officeSaves)
         {
-            var office = CreateOffice();
+            var office = CreateOffice(startOffice.id);
             ref var officeComponent = ref office.Get<OfficeComponent>();
             foreach (var furniture in startOffice.furnitures)
             {
@@ -48,14 +48,12 @@ sealed class OfficeSystem : IEcsInitSystem, IEcsRunSystem
         }
     }
     
-    public EcsEntity CreateOffice()
+    public EcsEntity CreateOffice(int id)
     {
         EcsEntity office = _world.NewEntity();
         ref var officeComponent = ref office.Get<OfficeComponent>();
         office.Get<SpawnOfficeEvent>();
-        officeComponent.id = 1;
-        
-        Debug.Log("add office");
+        officeComponent.id = id;
         return office;
     }
 
@@ -75,9 +73,5 @@ sealed class OfficeSystem : IEcsInitSystem, IEcsRunSystem
         office.furnitures.Add(furniture);
 
         furniture.Get<UpdateIncomeEvent>();
-        
-        Debug.Log("add furniture");
     }
-
-
 }

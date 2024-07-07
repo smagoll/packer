@@ -7,7 +7,7 @@ sealed class FurnitureSpawnSystem : IEcsRunSystem
     private readonly StaticData staticData;
     private readonly SceneData sceneData;
     
-    private readonly EcsFilter<HighlightTileComponent, PositionComponent> highlightFilter;
+    private readonly EcsFilter<HighlightComponent, PositionComponent> highlightFilter;
     private readonly EcsFilter<OfficeComponent, SpawnFurnitureEvent, Opened> spawnFurnitureFilter;
     private readonly EcsFilter<OfficeComponent, SpawnContentEvent> spawnFurnitureStartFilter;
     

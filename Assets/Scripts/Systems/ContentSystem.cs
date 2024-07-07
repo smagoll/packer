@@ -15,9 +15,6 @@ sealed class ContentSystem : IEcsRunSystem
         {
             var spawnOfficeContentEvent = spawnOfficeContentFilter.Get2(i);
             PaintTiles(spawnOfficeContentEvent.size);
-            
-            var office = spawnOfficeContentFilter.GetEntity(i);
-            office.Get<UITransitionOfficeContentEvent>();
         }
     }
 

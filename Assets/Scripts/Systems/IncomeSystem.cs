@@ -12,6 +12,7 @@ sealed class IncomeSystem : IEcsInitSystem, IEcsRunSystem
     private readonly SceneData sceneData;
 
     private readonly EcsFilter<SpawnFurnitureEvent> spawnFurnitureEventFilter;
+    private readonly EcsFilter<AddOfficeEvent> addOfficeEventFilter;
     private readonly EcsFilter<IncomeComponent> incomeFilter;
     private readonly EcsFilter<WalletComponent> walletFilter;
     private readonly EcsFilter<UpdateIncomeEvent> incomeEventFilter;
@@ -37,11 +38,8 @@ sealed class IncomeSystem : IEcsInitSystem, IEcsRunSystem
             UpdateIncomes();
         }
 
-        foreach (var i in spawnFurnitureEventFilter)
-        {
-            var money = walletFilter.Get1(0).money;
-            sceneData.money.text = money.ToString();
-        }
+        foreach (var i in spawnFurnitureEventFilter) UpdateTextIncome();
+        foreach (var i in addOfficeEventFilter) UpdateTextIncome();
 
         if (Time.time - lastTime > intervalTime)
         {
@@ -57,5 +55,11 @@ sealed class IncomeSystem : IEcsInitSystem, IEcsRunSystem
     {
         incomes.Clear();
         foreach (var i in incomeFilter) incomes.Add(incomeFilter.Get1(i));
+    }
+
+    private void UpdateTextIncome()
+    {
+        var money = walletFilter.Get1(0).money;
+        sceneData.money.text = money.ToString();
     }
 }

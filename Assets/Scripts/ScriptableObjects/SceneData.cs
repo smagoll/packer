@@ -1,17 +1,20 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
 public class SceneData : MonoBehaviour
 {
     public Transform listOffices;
+    public Transform listOfficesStore;
     public Transform listFurnitures;
     public GameObject canvasMain;
     public GameObject canvasContent;
     public GameObject officeContent;
     public GameObject furnitureWindow;
-    public Button buttonCreateOffice;
+    public GameObject storeWindow;
+    public Button buttonBuyOffice;
     public Button buttonBackToMain;
     public TextMeshProUGUI money;
 

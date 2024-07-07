@@ -12,7 +12,7 @@ sealed class UIFurnitureSpawnerSystem : IEcsRunSystem
     private readonly EcsFilter<WalletComponent> walletFilter;
     private readonly EcsFilter<UISpawnFurnitureEvent> uiSpawnFurnitureFilter;
     private readonly EcsFilter<OfficeComponent, Opened> officeOpenFilter;
-    private readonly EcsFilter<HighlightTileComponent, PositionComponent> highlightFilter;
+    private readonly EcsFilter<HighlightComponent, PositionComponent> highlightFilter;
 
     public void Run()
     {

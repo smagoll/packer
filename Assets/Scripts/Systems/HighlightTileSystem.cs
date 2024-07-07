@@ -1,9 +1,11 @@
 using Leopotam.Ecs;
+using UnityEngine;
 
 sealed class HighlightTileSystem : IEcsRunSystem, IEcsInitSystem
 {
     private readonly EcsWorld world;
     private readonly EcsFilter<HighlightTileEvent> highlightTileEventFilter;
+    private readonly EcsFilter<OfficeComponent, SpawnContentEvent> spawnOfficeContentFilter;
 
     private readonly SceneData sceneData;
     private readonly StaticData staticData;
@@ -12,7 +14,9 @@ sealed class HighlightTileSystem : IEcsRunSystem, IEcsInitSystem
     
     public void Init()
     {
-        CreateHighlight();
+        highlightEntity = world.NewEntity();
+        highlightEntity.Get<PositionComponent>();
+        highlightEntity.Get<HighlightComponent>();
     }
     
     public void Run()
@@ -22,32 +26,38 @@ sealed class HighlightTileSystem : IEcsRunSystem, IEcsInitSystem
             ref var highlightComponent = ref highlightTileEventFilter.Get1(i);
             var worldPoint = highlightComponent.worldPoint;
             
-            var tpos = sceneData.tilemapFloor.WorldToCell(worldPoint);
-
-            // Try to get a tile from cell position
-            var tile = sceneData.tilemapFloor.GetTile(tpos);
+            var tilePos = sceneData.tilemapFloor.WorldToCell(worldPoint);
+            var tile = sceneData.tilemapFloor.GetTile(tilePos);
 
             if(tile)
             { 
-                sceneData.tilemapHighlight.ClearAllTiles();
-                TileExtensions.PaintSingleTile(sceneData.tilemapHighlight, staticData.tileHighlight, tpos.x , tpos.y);
-                
-                highlightEntity.Get<ShowListFurnituresEvent>();
-                highlightEntity.Get<PositionComponent>().position = tpos;
+                SetHighlight(tilePos);
             }
             else
             {
-                sceneData.tilemapHighlight.ClearAllTiles();
-                
-                highlightEntity.Get<HideListFurnituresEvent>();
+                ClearHighlight();
             }
+        }
+        
+        foreach (var i in spawnOfficeContentFilter)
+        {
+            ClearHighlight();
         }
     }
 
-    private void CreateHighlight()
+    private void ClearHighlight()
     {
-        highlightEntity = world.NewEntity();
-        highlightEntity.Get<PositionComponent>();
-        highlightEntity.Get<HighlightTileComponent>();
+        sceneData.tilemapHighlight.ClearAllTiles();
+        highlightEntity.Get<HideListFurnituresEvent>();
+    }
+
+    private void SetHighlight(Vector3Int position)
+    {
+        sceneData.tilemapHighlight.ClearAllTiles();
+        TileExtensions.PaintSingleTile(sceneData.tilemapHighlight, staticData.tileHighlight, position.x , position.y);
+                
+        highlightEntity.Get<ShowListFurnituresEvent>();
+        ref var positionComponent = ref highlightEntity.Get<PositionComponent>();
+        positionComponent.position = position;
     }
 }
