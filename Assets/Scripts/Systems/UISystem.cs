@@ -73,6 +73,7 @@ sealed class UISystem : IEcsRunSystem, IEcsInitSystem
         sceneData.canvasMain.SetActive(true);
         sceneData.canvasContent.SetActive(false);
         sceneData.officeContent.SetActive(false);
+        sceneData.tilemapFurniture.ClearAllTiles();
     }
 
     private void ShowStore()

@@ -6,9 +6,11 @@ using UnityEngine.UI;
 
 public class SceneData : MonoBehaviour
 {
+    [Header("Lists")]
     public Transform listOffices;
     public Transform listOfficesStore;
     public Transform listFurnitures;
+    
     public GameObject canvasMain;
     public GameObject canvasContent;
     public GameObject officeContent;
@@ -22,4 +24,7 @@ public class SceneData : MonoBehaviour
     public Tilemap tilemapFloor;
     public Tilemap tilemapHighlight;
     public Tilemap tilemapFurniture;
+
+    [Header("Effects")] 
+    public Image failBackground;
 }

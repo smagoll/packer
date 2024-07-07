@@ -52,6 +52,7 @@ sealed class StoreSystem : IEcsRunSystem
         }
         else
         {
+            world.NewEntity().Get<FailBuyEvent>();
             Debug.Log("no money");
         }
     }

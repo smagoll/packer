@@ -12,6 +12,7 @@ sealed class OfficeSystem : IEcsInitSystem, IEcsRunSystem
     private readonly EcsFilter<AddOfficeEvent> addOfficeFilter;
     private readonly EcsFilter<OfficeComponent> officeFilter;
     private readonly EcsFilter<OfficeComponent, SpawnFurnitureEvent, Opened> officeOpenFilter;
+    private readonly EcsFilter<HighlightComponent, PositionComponent> highlightFilter;
     
     public void Init()
     {
@@ -30,8 +31,9 @@ sealed class OfficeSystem : IEcsInitSystem, IEcsRunSystem
         {
             ref var officeComponent = ref officeOpenFilter.Get1(i);
             ref var spawnFurnitureEvent = ref officeOpenFilter.Get2(i);
+            var pos = highlightFilter.Get2(0).position;
             
-            CreateFurniture(ref officeComponent, spawnFurnitureEvent.id, new Vector2(0,0));
+            CreateFurniture(ref officeComponent, spawnFurnitureEvent.id, pos);
         }
     }
     

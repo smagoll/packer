@@ -42,6 +42,7 @@ sealed class UIFurnitureSpawnerSystem : IEcsRunSystem
             }
             else
             {
+                _world.NewEntity().Get<FailBuyEvent>();
                 Debug.Log("cant buy");
             }
         });

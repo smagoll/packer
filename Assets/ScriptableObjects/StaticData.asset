@@ -25,5 +25,6 @@ MonoBehaviour:
     size: 2
     price: 100
     prefab: {fileID: 601894154709902627, guid: 01011404ab2d6204e80eab92de228984, type: 3}
+    prefabStore: {fileID: 601894154709902627, guid: 01011404ab2d6204e80eab92de228984, type: 3}
   tileFloor: {fileID: 11400000, guid: fe8b01cd5db097c468f2d8bedabe2cea, type: 2}
   tileHighlight: {fileID: 11400000, guid: 9aaae4285817f834482819f5854b3866, type: 2}
