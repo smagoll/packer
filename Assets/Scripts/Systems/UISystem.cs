@@ -3,7 +3,7 @@ using UnityEngine;
 
 sealed class UISystem : IEcsRunSystem, IEcsInitSystem
 {
-    private readonly EcsWorld _world;
+    private readonly EcsWorld world;
     private StaticData staticData;
     private SceneData sceneData;
 
@@ -18,6 +18,11 @@ sealed class UISystem : IEcsRunSystem, IEcsInitSystem
         sceneData.buttonBackStoreToMain.onClick.AddListener(ButtonBackStoreToMain);
         sceneData.buttonBackContentToMain.onClick.AddListener(ButtonBackContentToMain);
         sceneData.buttonBuyOffice.onClick.AddListener(ShowStore);
+        sceneData.sellFurniture.onClick.AddListener(() =>
+        {
+            world.NewEntity().Get<DeleteFurnitureEvent>();
+            sceneData.editPanel.SetActive(false);
+        });
     }
     
     public void Run()
@@ -41,32 +46,30 @@ sealed class UISystem : IEcsRunSystem, IEcsInitSystem
 
     private void TransitionToContent()
     {
-        sceneData.canvasMain.SetActive(false);
-        sceneData.canvasContent.SetActive(true);
+        sceneData.canvasMain.gameObject.SetActive(false);
+        sceneData.canvasContent.gameObject.SetActive(true);
         sceneData.officeContent.SetActive(true);
     }
 
     private void ShowListFurnitures()
     {
-        if (!sceneData.furnitureWindow.activeSelf)
+        if (!sceneData.furniturePanel.gameObject.activeSelf)
         {
-            sceneData.furnitureWindow.SetActive(true);
-            EcsEntity entity = _world.NewEntity();
-            entity.Get<UISpawnFurnitureEvent>();
+            sceneData.furniturePanel.gameObject.SetActive(true);
         }
     }
     
     private void HideListFurnitures()
     {
-        if (sceneData.furnitureWindow.activeSelf)
+        if (sceneData.furniturePanel.gameObject.activeSelf)
         {
-            sceneData.furnitureWindow.SetActive(false);
+            sceneData.furniturePanel.gameObject.SetActive(false);
         }
     }
 
     private void ButtonBackStoreToMain()
     {
-        ref var switchEvent = ref _world.NewEntity().Get<SwitchMainStoreEvent>();
+        ref var switchEvent = ref world.NewEntity().Get<SwitchMainStoreEvent>();
         switchEvent.isSwitch = false;
     }
     
@@ -77,14 +80,16 @@ sealed class UISystem : IEcsRunSystem, IEcsInitSystem
         
         HideListFurnitures();
         
-        sceneData.canvasMain.SetActive(true);
-        sceneData.canvasContent.SetActive(false);
+        sceneData.canvasMain.gameObject.SetActive(true);
+        sceneData.canvasContent.gameObject.SetActive(false);
         sceneData.officeContent.SetActive(false);
         sceneData.tilemapFurniture.ClearAllTiles();
     }
 
     private void ShowStore()
     {
-        _world.NewEntity().Get<OpenStoreEvent>();
+        world.NewEntity().Get<OpenStoreEvent>();
     }
+
+
 }

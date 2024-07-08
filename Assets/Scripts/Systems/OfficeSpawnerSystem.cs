@@ -11,6 +11,8 @@ sealed class OfficeSpawnerSystem : IEcsRunSystem
 
     private readonly EcsFilter<OfficeComponent, SpawnOfficeEvent> spawnOfficeFilter;
 
+    private Transform listOffices;
+    
     public void Run()
     {
         foreach (var i in spawnOfficeFilter)

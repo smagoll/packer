@@ -1,4 +1,5 @@
 using Leopotam.Ecs;
+using UnityEngine;
 
 sealed class ContentSystem : IEcsRunSystem
 {
@@ -8,6 +9,9 @@ sealed class ContentSystem : IEcsRunSystem
     private SceneData sceneData;
 
     private readonly EcsFilter<OfficeComponent, SpawnContentEvent> spawnOfficeContentFilter;
+    private readonly EcsFilter<OfficeComponent, Opened> officeOpenedFilter;
+    private readonly EcsFilter<HighlightComponent, PositionComponent> highlightFilter;
+    private readonly EcsFilter<DeleteFurnitureEvent> deleteFurnitureFilter;
     
     public void Run()
     {
@@ -15,6 +19,11 @@ sealed class ContentSystem : IEcsRunSystem
         {
             var spawnOfficeContentEvent = spawnOfficeContentFilter.Get2(i);
             PaintTiles(spawnOfficeContentEvent.size);
+        }
+
+        foreach (var i in deleteFurnitureFilter)
+        {
+            ButtonSell();
         }
     }
 
@@ -27,5 +36,19 @@ sealed class ContentSystem : IEcsRunSystem
                 TileExtensions.PaintSingleTile(sceneData.tilemapFloor, staticData.tileFloor, i, j);
             }
         }
+    }
+    
+    private void ButtonSell()
+    {
+            ref var officeComponent = ref officeOpenedFilter.Get1(0);
+            ref var listFurnitures = ref officeComponent.furnitures;
+            var position = highlightFilter.Get2(0).position;
+            foreach (var furniture in listFurnitures)
+            {
+                if (furniture.Get<PositionComponent>().position == position)
+                {
+                    Debug.Log("delete furniture");
+                }
+            }
     }
 }

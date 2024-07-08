@@ -10,7 +10,7 @@ sealed class UIFurnitureSpawnerSystem : IEcsRunSystem
     private readonly SceneData sceneData;
 
     private readonly EcsFilter<WalletComponent> walletFilter;
-    private readonly EcsFilter<UISpawnFurnitureEvent> uiSpawnFurnitureFilter;
+    private readonly EcsFilter<ShowListFurnituresEvent> uiSpawnFurnitureFilter;
     private readonly EcsFilter<OfficeComponent, Opened> officeOpenFilter;
     private readonly EcsFilter<HighlightComponent, PositionComponent> highlightFilter;
 

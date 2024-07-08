@@ -55,8 +55,18 @@ sealed class HighlightTileSystem : IEcsRunSystem, IEcsInitSystem
     {
         sceneData.tilemapHighlight.ClearAllTiles();
         TileExtensions.PaintSingleTile(sceneData.tilemapHighlight, staticData.tileHighlight, position.x , position.y);
-                
-        highlightEntity.Get<ShowListFurnituresEvent>();
+
+        if (TileExtensions.CheckTile(sceneData.tilemapFurniture, position))
+        {
+            highlightEntity.Get<HideListFurnituresEvent>();
+            sceneData.editPanel.SetActive(true);
+        }
+        else
+        {
+            highlightEntity.Get<ShowListFurnituresEvent>();
+            sceneData.editPanel.SetActive(false);
+        }
+        
         ref var positionComponent = ref highlightEntity.Get<PositionComponent>();
         positionComponent.position = position;
     }

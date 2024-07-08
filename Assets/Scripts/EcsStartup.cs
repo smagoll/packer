@@ -64,11 +64,11 @@ public class EcsStartup : MonoBehaviour
             .OneFrame<FailBuyEvent>()
 
             .OneFrame<HighlightTileEvent>()
+            .OneFrame<DeleteFurnitureEvent>()
             .OneFrame<OpenStoreEvent>()
             .OneFrame<SwitchMainStoreEvent>()
             .OneFrame<ShowListFurnituresEvent>()
-            .OneFrame<HideListFurnituresEvent>()
-            .OneFrame<UISpawnFurnitureEvent>();
+            .OneFrame<HideListFurnituresEvent>();
     }
     
     private void Update()

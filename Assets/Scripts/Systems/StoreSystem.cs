@@ -13,7 +13,7 @@ sealed class StoreSystem : IEcsRunSystem
     private readonly EcsFilter<OpenStoreEvent> openStoreEventFilter;
     private readonly EcsFilter<SwitchMainStoreEvent> switchMainStoreEventFilter;
     private readonly EcsFilter<WalletComponent> walletFilter;
-    
+        
     public void Run()
     {
         foreach (var i in openStoreEventFilter)
@@ -72,12 +72,12 @@ sealed class StoreSystem : IEcsRunSystem
     {
         if (isSwitch)
         {
-            sceneData.storeWindow.SetActive(true);
+            sceneData.storeWindow.gameObject.SetActive(true);
             sceneData.buttonBuyOffice.gameObject.SetActive(false);
         }
         else
         {
-            sceneData.storeWindow.SetActive(false);
+            sceneData.storeWindow.gameObject.SetActive(false);
             sceneData.buttonBuyOffice.gameObject.SetActive(true);
         }
     }
