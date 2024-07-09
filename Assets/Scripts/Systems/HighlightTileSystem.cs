@@ -49,7 +49,7 @@ sealed class HighlightTileSystem : IEcsRunSystem, IEcsInitSystem
     {
         sceneData.tilemapHighlight.ClearAllTiles();
         highlightEntity.Get<HideListFurnituresEvent>();
-        sceneData.editPanel.SetActive(false);
+        highlightEntity.Get<HideEditPanelEvent>();
     }
 
     private void SetHighlight(Vector3Int position)
@@ -60,12 +60,12 @@ sealed class HighlightTileSystem : IEcsRunSystem, IEcsInitSystem
         if (TileExtensions.CheckTile(sceneData.tilemapFurniture, position))
         {
             highlightEntity.Get<HideListFurnituresEvent>();
-            sceneData.editPanel.SetActive(true);
+            highlightEntity.Get<ShowEditPanelEvent>();
         }
         else
         {
             highlightEntity.Get<ShowListFurnituresEvent>();
-            sceneData.editPanel.SetActive(false);
+            highlightEntity.Get<HideEditPanelEvent>();
         }
         
         ref var positionComponent = ref highlightEntity.Get<PositionComponent>();

@@ -33,8 +33,8 @@ sealed class InputSystem : IEcsRunSystem
                 selectedTile = tile;
             }
             
-            //entityCam = world.NewEntity();
-            //entityCam.Get<MoveCameraEvent>();
+            entityCam = world.NewEntity();
+            entityCam.Get<MoveCameraEvent>();
         }
 
         if (Input.GetMouseButtonUp(0))
@@ -67,7 +67,7 @@ sealed class InputSystem : IEcsRunSystem
             }
 
             selectedTile = null;
-            //if (entityCam != null) entityCam.Destroy();
+            if (entityCam != null) entityCam.Destroy();
         }
     }
 

@@ -68,7 +68,9 @@ public class EcsStartup : MonoBehaviour
             .OneFrame<OpenStoreEvent>()
             .OneFrame<SwitchMainStoreEvent>()
             .OneFrame<ShowListFurnituresEvent>()
-            .OneFrame<HideListFurnituresEvent>();
+            .OneFrame<HideListFurnituresEvent>()
+            .OneFrame<ShowEditPanelEvent>()
+            .OneFrame<HideEditPanelEvent>();
     }
     
     private void Update()

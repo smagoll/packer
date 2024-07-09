@@ -61,6 +61,7 @@ sealed class UIFurnitureSpawnerSystem : IEcsRunSystem
             var entity = officeOpenFilter.GetEntity(0);
             ref var spawnFurnitureComponent = ref entity.Get<SpawnFurnitureEvent>();
             spawnFurnitureComponent.id = furniture.id;
+            world.NewEntity().Get<ShowEditPanelEvent>();
         }
         else
         {
