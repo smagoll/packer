@@ -55,6 +55,7 @@ sealed class IncomeSystem : IEcsInitSystem, IEcsRunSystem
     {
         incomes.Clear();
         foreach (var i in incomeFilter) incomes.Add(incomeFilter.Get1(i));
+        UpdateTextIncome();
     }
 
     private void UpdateTextIncome()

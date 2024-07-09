@@ -64,7 +64,7 @@ public class EcsStartup : MonoBehaviour
             .OneFrame<FailBuyEvent>()
 
             .OneFrame<HighlightTileEvent>()
-            .OneFrame<DeleteFurnitureEvent>()
+            .OneFrame<SellFurnitureEvent>()
             .OneFrame<OpenStoreEvent>()
             .OneFrame<SwitchMainStoreEvent>()
             .OneFrame<ShowListFurnituresEvent>()

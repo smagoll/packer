@@ -1,5 +1,4 @@
 using Leopotam.Ecs;
-using UnityEngine;
 
 sealed class UISystem : IEcsRunSystem, IEcsInitSystem
 {
@@ -18,11 +17,7 @@ sealed class UISystem : IEcsRunSystem, IEcsInitSystem
         sceneData.buttonBackStoreToMain.onClick.AddListener(ButtonBackStoreToMain);
         sceneData.buttonBackContentToMain.onClick.AddListener(ButtonBackContentToMain);
         sceneData.buttonBuyOffice.onClick.AddListener(ShowStore);
-        sceneData.sellFurniture.onClick.AddListener(() =>
-        {
-            world.NewEntity().Get<DeleteFurnitureEvent>();
-            sceneData.editPanel.SetActive(false);
-        });
+        sceneData.sellFurniture.onClick.AddListener(() => world.NewEntity().Get<SellFurnitureEvent>());
     }
     
     public void Run()
@@ -90,6 +85,4 @@ sealed class UISystem : IEcsRunSystem, IEcsInitSystem
     {
         world.NewEntity().Get<OpenStoreEvent>();
     }
-
-
 }

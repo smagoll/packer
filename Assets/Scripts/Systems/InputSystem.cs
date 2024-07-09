@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using Leopotam.Ecs;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
 
 sealed class InputSystem : IEcsRunSystem
@@ -15,6 +17,8 @@ sealed class InputSystem : IEcsRunSystem
     {
         if (Input.GetMouseButtonDown(0))
         {
+            if(CheckUI()) return;
+            
             var cam = Camera.main;
             var mousePos = Input.mousePosition;
             mousePos.z = -cam.transform.position.z;
@@ -29,12 +33,14 @@ sealed class InputSystem : IEcsRunSystem
                 selectedTile = tile;
             }
             
-            entityCam = world.NewEntity();
-            entityCam.Get<MoveCameraEvent>();
+            //entityCam = world.NewEntity();
+            //entityCam.Get<MoveCameraEvent>();
         }
 
         if (Input.GetMouseButtonUp(0))
         {
+            if(CheckUI()) return;
+            
             var cam = Camera.main;
             var mousePos = Input.mousePosition;
             mousePos.z = -cam.transform.position.z;
@@ -57,10 +63,27 @@ sealed class InputSystem : IEcsRunSystem
             {
                 sceneData.tilemapHighlight.ClearAllTiles();
                 world.NewEntity().Get<HideListFurnituresEvent>();
+                sceneData.editPanel.SetActive(false);
             }
 
             selectedTile = null;
-            entityCam.Destroy();
+            //if (entityCam != null) entityCam.Destroy();
         }
+    }
+
+    private bool CheckUI()
+    {
+        var eventSystem = EventSystem.current;
+        var pointerEventData = new PointerEventData(eventSystem);
+        pointerEventData.position = Input.mousePosition;
+        List<RaycastResult> results = new List<RaycastResult>();
+        eventSystem.RaycastAll(pointerEventData, results);
+        
+        foreach (RaycastResult result in results)
+        {
+            if (result.gameObject.layer == LayerMask.NameToLayer("UI")) return true;
+        }
+        
+        return false;
     }
 }

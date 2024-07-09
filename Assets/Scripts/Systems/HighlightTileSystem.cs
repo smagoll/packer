@@ -49,6 +49,7 @@ sealed class HighlightTileSystem : IEcsRunSystem, IEcsInitSystem
     {
         sceneData.tilemapHighlight.ClearAllTiles();
         highlightEntity.Get<HideListFurnituresEvent>();
+        sceneData.editPanel.SetActive(false);
     }
 
     private void SetHighlight(Vector3Int position)
