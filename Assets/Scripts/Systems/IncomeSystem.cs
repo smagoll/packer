@@ -12,6 +12,7 @@ sealed class IncomeSystem : IEcsInitSystem, IEcsRunSystem, IEcsDestroySystem
 
     private readonly EcsFilter<SpawnFurnitureEvent> spawnFurnitureEventFilter;
     private readonly EcsFilter<AddOfficeEvent> addOfficeEventFilter;
+    private readonly EcsFilter<EndCreateOfficesEvent> endCreateOfficesFilter;
     private readonly EcsFilter<IncomeComponent> incomeFilter;
     private readonly EcsFilter<WalletComponent> walletFilter;
     private readonly EcsFilter<UpdateIncomeEvent> incomeEventFilter;
@@ -28,20 +29,16 @@ sealed class IncomeSystem : IEcsInitSystem, IEcsRunSystem, IEcsDestroySystem
         EcsEntity walletEntity = world.NewEntity();
         ref var walletComponent = ref walletEntity.Get<WalletComponent>();
         walletComponent.money = YandexGame.savesData.money;
-
-        IncomeAbsence();
+        
         UpdateTextIncome();
     }
 
     public void Run()
     {
-        foreach (var i in incomeEventFilter)
-        {
-            UpdateIncomes();
-        }
-
+        foreach (var i in incomeEventFilter) UpdateIncomes();
         foreach (var i in spawnFurnitureEventFilter) UpdateTextIncome();
         foreach (var i in addOfficeEventFilter) UpdateTextIncome();
+        foreach (var i in endCreateOfficesFilter) IncomeAbsence();
 
         if (Time.time - lastTime > intervalTime)
         {

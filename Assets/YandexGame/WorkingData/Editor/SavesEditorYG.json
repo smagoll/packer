@@ -1,10 +1,10 @@
 {
-    "idSave": 65,
+    "idSave": 130,
     "isFirstSession": false,
     "language": "en",
     "promptDone": false,
-    "money": 238,
-    "lastDateEnter": 638563273139623029,
+    "money": 69267,
+    "lastDateEnter": 638563886753084522,
     "offices": [
         {
             "id": 0,
@@ -20,8 +20,15 @@
                 {
                     "id": 1,
                     "position": {
+                        "x": 0.0,
+                        "y": 0.0
+                    }
+                },
+                {
+                    "id": 2,
+                    "position": {
                         "x": 1.0,
-                        "y": 1.0
+                        "y": 0.0
                     }
                 }
             ]
@@ -29,7 +36,36 @@
         {
             "id": 1,
             "officeType": 0,
-            "furnitures": []
+            "furnitures": [
+                {
+                    "id": 2,
+                    "position": {
+                        "x": 1.0,
+                        "y": 0.0
+                    }
+                },
+                {
+                    "id": 1,
+                    "position": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "id": 2,
+                    "position": {
+                        "x": 0.0,
+                        "y": 0.0
+                    }
+                },
+                {
+                    "id": 2,
+                    "position": {
+                        "x": 0.0,
+                        "y": 1.0
+                    }
+                }
+            ]
         }
     ]
 }

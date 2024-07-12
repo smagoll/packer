@@ -1,11 +1,16 @@
+using System.Linq;
 using Leopotam.Ecs;
 using UnityEngine;
 
 sealed class HighlightTileSystem : IEcsRunSystem, IEcsInitSystem
 {
     private readonly EcsWorld world;
+    
     private readonly EcsFilter<HighlightTileEvent> highlightTileEventFilter;
     private readonly EcsFilter<OfficeComponent, SpawnContentEvent> spawnOfficeContentFilter;
+    private readonly EcsFilter<OfficeComponent, Opened> officeOpenedFilter;
+    private readonly EcsFilter<HighlightComponent, PositionComponent> highlightFilter;
+    private readonly EcsFilter<FurnitureComponent, PositionComponent, Selled> furnitureSelledFilter;
 
     private readonly SceneData sceneData;
     private readonly StaticData staticData;
@@ -32,6 +37,7 @@ sealed class HighlightTileSystem : IEcsRunSystem, IEcsInitSystem
             if(tile)
             { 
                 SetHighlight(tilePos);
+                //MarkFurniture();
             }
             else
             {
@@ -70,5 +76,26 @@ sealed class HighlightTileSystem : IEcsRunSystem, IEcsInitSystem
         
         ref var positionComponent = ref highlightEntity.Get<PositionComponent>();
         positionComponent.position = position;
+        
+        MarkFurniture();
+    }
+    
+    private void MarkFurniture()
+    {
+        foreach (var i in furnitureSelledFilter) furnitureSelledFilter.GetEntity(i).Del<Selled>();
+        
+        ref var officeComponent = ref officeOpenedFilter.Get1(0);
+        ref var listFurnitures = ref officeComponent.furnitures;
+        var position = highlightFilter.Get2(0).position;
+        foreach (var furniture in listFurnitures.ToList())
+        {
+            if (furniture.Get<PositionComponent>().position == position)
+            {
+                var furnitureIncomeData = staticData.furnitures.First(x => x.id == furniture.Get<FurnitureComponent>().id);
+                var priceSell = Mathf.RoundToInt(furnitureIncomeData.price / 10);
+                ref var selled = ref furniture.Get<Selled>();
+                selled.price = priceSell;
+            }
+        }
     }
 }

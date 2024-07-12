@@ -55,6 +55,8 @@ sealed class OfficeSystem : IEcsInitSystem, IEcsRunSystem
                 CreateFurniture(ref officeComponent, furniture.id, furniture.position);
             }
         }
+
+        world.NewEntity().Get<EndCreateOfficesEvent>();
     }
     
     private EcsEntity CreateOffice(int id, OfficeType officeType)
@@ -90,10 +92,13 @@ sealed class OfficeSystem : IEcsInitSystem, IEcsRunSystem
         if (office.furnitures == null) office.furnitures = new();
         office.furnitures.Add(furniture);
 
-        //var idOffice = office.id; 
-        //var officeSave = YandexGame.savesData.offices.First(x => x.id == idOffice);
-        //officeSave.furnitures.Add(new FurnitureSave(id, position));
-
+        var idOffice = office.id; 
+        var officeSave = YandexGame.savesData.offices.First(x => x.id == idOffice);
+        if(!officeSave.furnitures.Exists(x => x.position == position))
+        {
+            officeSave.furnitures.Add(new FurnitureSave(id, position));
+        }
+        
         furniture.Get<UpdateIncomeEvent>();
     }
 }

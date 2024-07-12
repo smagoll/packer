@@ -1,8 +1,9 @@
 using System.Linq;
 using Leopotam.Ecs;
 using UnityEngine;
+using YG;
 
-sealed class ContentSystem : IEcsRunSystem, IEcsInitSystem
+sealed class ContentSystem : IEcsRunSystem
 {
     private readonly EcsWorld world;
     
@@ -13,17 +14,8 @@ sealed class ContentSystem : IEcsRunSystem, IEcsInitSystem
     private readonly EcsFilter<OfficeComponent, Opened> officeOpenedFilter;
     private readonly EcsFilter<HighlightComponent, PositionComponent> highlightFilter;
     private readonly EcsFilter<FurnitureComponent, PositionComponent, Selled> furnitureSelledFilter;
-    private readonly EcsFilter<SellFurnitureEvent> sellFurnitureFilter;
+    private readonly EcsFilter<SellFurnitureEvent> sellFurnitureEventFilter;
     private readonly EcsFilter<WalletComponent> walletFilter;
-    private readonly EcsFilter<ShowEditPanelEvent> showEditPanel;
-    private readonly EcsFilter<HideEditPanelEvent> hideEditPanel;
-
-    private ButtonCell buttonCell;
-    
-    public void Init()
-    {
-        buttonCell = sceneData.sellFurniture.gameObject.GetComponent<ButtonCell>();
-    }
     
     public void Run()
     {
@@ -33,22 +25,9 @@ sealed class ContentSystem : IEcsRunSystem, IEcsInitSystem
             PaintTiles(spawnOfficeContentEvent.size);
         }
         
-        foreach (var i in sellFurnitureFilter)
+        foreach (var i in sellFurnitureEventFilter)
         {
             SellFurniture();
-        }
-
-        foreach (var i in showEditPanel)
-        {
-            MarkFurniture();
-        }
-
-        foreach (var i in hideEditPanel)
-        {
-            foreach (var j in furnitureSelledFilter)
-            {
-                furnitureSelledFilter.GetEntity(j).Del<Selled>();
-            }
         }
     }
 
@@ -82,22 +61,12 @@ sealed class ContentSystem : IEcsRunSystem, IEcsInitSystem
         
         world.NewEntity().Get<HideEditPanelEvent>();
         sceneData.tilemapHighlight.ClearAllTiles();
+        DeleteFurnitureData(officeComponent.id, position);
     }
 
-    private void MarkFurniture()
+    private void DeleteFurnitureData(int idOffice, Vector2 position)
     {
-        ref var officeComponent = ref officeOpenedFilter.Get1(0);
-        ref var listFurnitures = ref officeComponent.furnitures;
-        var position = highlightFilter.Get2(0).position;
-        foreach (var furniture in listFurnitures.ToList())
-        {
-            if (furniture.Get<PositionComponent>().position == position)
-            {
-                var furnitureIncomeData = staticData.furnitures.First(x => x.id == furniture.Get<FurnitureComponent>().id);
-                var priceSell = Mathf.RoundToInt(furnitureIncomeData.price / 10);
-                ref var selled = ref furniture.Get<Selled>();
-                selled.price = priceSell;
-            }
-        }
+        var officeSave = YandexGame.savesData.offices.First(x => x.id == idOffice);
+        officeSave.furnitures.RemoveAll(x => x.position == position);
     }
 }

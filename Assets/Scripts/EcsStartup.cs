@@ -60,6 +60,7 @@ public class EcsStartup : MonoBehaviour
             .OneFrame<SpawnOfficeEvent>()
             .OneFrame<SpawnFurnitureEvent>()
             .OneFrame<SpawnContentEvent>()
+            .OneFrame<EndCreateOfficesEvent>()
 
             .OneFrame<FailBuyEvent>()
 

@@ -19,6 +19,10 @@ sealed class InputSystem : IEcsRunSystem
         {
             if(CheckUI()) return;
             
+            sceneData.tilemapHighlight.ClearAllTiles();
+            world.NewEntity().Get<HideListFurnituresEvent>();
+            sceneData.editPanel.SetActive(false);
+            
             var cam = Camera.main;
             var mousePos = Input.mousePosition;
             mousePos.z = -cam.transform.position.z;

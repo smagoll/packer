@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace YG
 {
@@ -18,7 +17,6 @@ namespace YG
         public SavesYG()
         {
             offices = new();
-            offices.Add(new OfficeSave(0, OfficeType.Common));
         }
     }
 }
