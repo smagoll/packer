@@ -1,0 +1,35 @@
+{
+    "idSave": 65,
+    "isFirstSession": false,
+    "language": "en",
+    "promptDone": false,
+    "money": 238,
+    "lastDateEnter": 638563273139623029,
+    "offices": [
+        {
+            "id": 0,
+            "officeType": 0,
+            "furnitures": [
+                {
+                    "id": 1,
+                    "position": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "id": 1,
+                    "position": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            ]
+        },
+        {
+            "id": 1,
+            "officeType": 0,
+            "furnitures": []
+        }
+    ]
+}

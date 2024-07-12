@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace YG
 {
@@ -11,7 +12,7 @@ namespace YG
         public bool promptDone;
 
         public int money = 100;
-
+        public long lastDateEnter;
         public List<OfficeSave> offices;
 
         public SavesYG()

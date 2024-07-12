@@ -67,7 +67,8 @@ sealed class OfficeSystem : IEcsInitSystem, IEcsRunSystem
         
         if(!YandexGame.savesData.offices.Exists(x => x.id == id))
         {
-            YandexGame.savesData.offices.Add(new(id, officeType));
+            ref var offices = ref YandexGame.savesData.offices;
+            offices.Add(new(id, officeType));
             Debug.Log("save");
         };
         
@@ -88,6 +89,10 @@ sealed class OfficeSystem : IEcsInitSystem, IEcsRunSystem
         
         if (office.furnitures == null) office.furnitures = new();
         office.furnitures.Add(furniture);
+
+        //var idOffice = office.id; 
+        //var officeSave = YandexGame.savesData.offices.First(x => x.id == idOffice);
+        //officeSave.furnitures.Add(new FurnitureSave(id, position));
 
         furniture.Get<UpdateIncomeEvent>();
     }

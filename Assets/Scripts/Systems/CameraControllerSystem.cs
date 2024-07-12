@@ -1,3 +1,4 @@
+using System;
 using Leopotam.Ecs;
 using UnityEngine;
 
@@ -5,19 +6,37 @@ sealed class CameraControllerSystem : IEcsRunSystem
 {
     private readonly EcsWorld world;
 
-    private readonly EcsFilter<MoveCameraEvent> moveCameraEventFilter;
+    private readonly EcsFilter<MoveCamera> moveCameraEventFilter;
     
-    private Camera cam = Camera.main;
+    private readonly Camera cam = Camera.main;
+    private Vector3 startPos;
+    private Vector3 direction;
 
     public void Run()
     {
         if (!moveCameraEventFilter.IsEmpty())
         {
+            ref var moveCameraComponent = ref moveCameraEventFilter.Get1(0);
+            startPos = moveCameraComponent.startPos;
+            
             var mousePos = Input.mousePosition;
             mousePos.z = -cam.transform.position.z;
-            var pos = Camera.main.ScreenToWorldPoint(mousePos);
-            cam.transform.position = new Vector3(pos.x, pos.y, cam.transform.position.z);
-            Debug.Log("move camera");
+            var worldPoint = cam.ScreenToWorldPoint(mousePos);
+            //direction = startPos - worldPoint;
+            direction = worldPoint;
+            
+            //if (moveCameraComponent.isMove)
+            //{
+            //    cam.transform.position += Vector3.Lerp(Vector3.zero, direction, 5f * Time.deltaTime);
+            //    return;
+            //}
+            
+            if (direction.magnitude > .05f)
+            {
+                moveCameraComponent.isMove = true;
+            }
         }
+        
+        if(startPos != Vector3.zero) cam.transform.position = Vector3.Lerp(startPos, new Vector3(direction.x, direction.y, cam.transform.position.z), 5f * Time.deltaTime);
     }
 }

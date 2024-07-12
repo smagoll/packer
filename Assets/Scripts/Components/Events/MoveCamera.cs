@@ -1,7 +1,8 @@
 using Leopotam.Ecs;
 using UnityEngine;
 
-struct MoveCameraEvent
+struct MoveCamera
 {
     public Vector3 startPos;
+    public bool isMove;
 }

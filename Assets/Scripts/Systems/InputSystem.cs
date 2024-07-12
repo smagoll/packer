@@ -9,8 +9,8 @@ sealed class InputSystem : IEcsRunSystem
     private readonly EcsWorld world;
     private readonly SceneData sceneData;
 
-    private EcsEntity entityCam;
-
+    private readonly EcsFilter<MoveCamera> moveCameraFilter;
+    
     private TileBase selectedTile;
     
     public void Run()
@@ -33,22 +33,29 @@ sealed class InputSystem : IEcsRunSystem
                 selectedTile = tile;
             }
             
-            entityCam = world.NewEntity();
-            entityCam.Get<MoveCameraEvent>();
+            var entityCam = world.NewEntity();
+            ref var moveCameraEvent = ref entityCam.Get<MoveCamera>();
+            moveCameraEvent.startPos = worldPoint;
         }
 
         if (Input.GetMouseButtonUp(0))
         {
+            foreach (var i in moveCameraFilter)
+            {
+                bool isMove = moveCameraFilter.Get1(i).isMove;
+                moveCameraFilter.GetEntity(i).Del<MoveCamera>();
+                if (isMove) return;
+            }
             if(CheckUI()) return;
             
             var cam = Camera.main;
             var mousePos = Input.mousePosition;
             mousePos.z = -cam.transform.position.z;
-            var worldPoint = Camera.main.ScreenToWorldPoint(mousePos);
+            var worldPoint = cam.ScreenToWorldPoint(mousePos);
 
-            var tpos = sceneData.tilemapFloor.WorldToCell(worldPoint);
-            // Try to get a tile from cell position
-            var tile = sceneData.tilemapFloor.GetTile(tpos);
+            var tilePosition = sceneData.tilemapFloor.WorldToCell(worldPoint);
+
+            var tile = sceneData.tilemapFloor.GetTile(tilePosition);
 
             if (tile)
             {
@@ -67,7 +74,6 @@ sealed class InputSystem : IEcsRunSystem
             }
 
             selectedTile = null;
-            if (entityCam != null) entityCam.Destroy();
         }
     }
 
