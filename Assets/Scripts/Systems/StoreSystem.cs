@@ -43,6 +43,7 @@ sealed class StoreSystem : IEcsRunSystem
 
         var storeCell = officeObject.GetComponent<StoreCell>();
         storeCell.textPrice.text = office.price.ToString();
+        storeCell.icon.sprite = office.icon;
         
         officeObject.GetComponent<Button>().onClick.AddListener(() =>
         {

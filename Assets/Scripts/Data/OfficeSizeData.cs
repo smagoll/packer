@@ -8,5 +8,5 @@ public struct OfficeSizeData
     public OfficeType officeType;
     public int size;
     public int price;
-    public GameObject prefab;
+    public Sprite icon;
 }

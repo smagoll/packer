@@ -13,5 +13,6 @@ public class StaticData : ScriptableObject
     
     [Header("Prefabs")]
     public GameObject prefabOfficeUI;
+    public GameObject prefabOffice;
     public GameObject prefabFurnitureUI;
 }

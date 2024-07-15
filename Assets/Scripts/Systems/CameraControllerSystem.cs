@@ -50,6 +50,9 @@ sealed class CameraControllerSystem : IEcsRunSystem
         if (direction.magnitude > 0f)
         {
             cam.transform.position += Vector3.Lerp(Vector3.zero, direction, 10f * Time.deltaTime);
+            var x = Mathf.Clamp(cam.transform.position.x, -10, 10);
+            var y = Mathf.Clamp(cam.transform.position.y, -10, 10);
+            cam.transform.position = new Vector3(x, y, cam.transform.position.z);
         }
     }
 }

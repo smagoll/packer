@@ -10,4 +10,5 @@ public struct FurnitureIncomeData
     public int income;
     public int price;
     public Tile prefabTile;
+    public Sprite icon;
 }

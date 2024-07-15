@@ -17,24 +17,27 @@ MonoBehaviour:
     id: 1
     income: 1
     price: 50
-    prefabTile: {fileID: 11400000, guid: 707e10218c747e443b2c91550b5b504a, type: 2}
-  - title: "\u0421\u0442\u043E\u043B \u0441\u043E \u0441\u043A\u0430\u043D\u0435\u0440\u043E\u043C"
+    prefabTile: {fileID: 11400000, guid: a5d7aa4fca0775b40849bb32c4dd18b0, type: 2}
+    icon: {fileID: 21300000, guid: d75f4caf849d6f94d8f4e434b5d6fcbc, type: 3}
+  - title: "\u041A\u0430\u0440\u0442\u043E\u043D"
     id: 2
-    income: 3
-    price: 200
-    prefabTile: {fileID: 11400000, guid: 707e10218c747e443b2c91550b5b504a, type: 2}
+    income: 5
+    price: 100000
+    prefabTile: {fileID: 11400000, guid: a40b14929cafe214f911068f2c13224f, type: 2}
+    icon: {fileID: 21300000, guid: 001f8d810c85c37428daa11722ab25cc, type: 3}
   offices:
   - title: "\u0417\u0430\u0431\u0435\u0433\u0430\u043B\u043E\u0432\u043A\u0430"
     officeType: 0
     size: 2
-    price: 100
-    prefab: {fileID: 601894154709902627, guid: 01011404ab2d6204e80eab92de228984, type: 3}
+    price: 10000
+    icon: {fileID: 21300000, guid: 6b27fc7fa64fd20458745eb6c2e8d035, type: 3}
   - title: "\u0417\u0430\u0431\u0435\u0433\u0430\u043B\u043E\u0432\u043A\u0430"
     officeType: 1
     size: 3
-    price: 500
-    prefab: {fileID: 601894154709902627, guid: 01011404ab2d6204e80eab92de228984, type: 3}
+    price: 1000000
+    icon: {fileID: 21300000, guid: 1386fe5c4c0d9d34fbbbd4817cfbd237, type: 3}
   tileFloor: {fileID: 11400000, guid: 2e7f47c31eeda5b49a6a532cdac60414, type: 2}
   tileHighlight: {fileID: 11400000, guid: 254020981e92a8b4c8e22975b8c2ae8f, type: 2}
   prefabOfficeUI: {fileID: 601894154709902627, guid: 6868431e2e2288041bd27907f5dd051c, type: 3}
+  prefabOffice: {fileID: 601894154709902627, guid: 01011404ab2d6204e80eab92de228984, type: 3}
   prefabFurnitureUI: {fileID: 7951671773705077950, guid: a1162323d2644d949940aee41c2f8484, type: 3}
