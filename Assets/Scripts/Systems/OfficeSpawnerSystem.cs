@@ -31,7 +31,7 @@ sealed class OfficeSpawnerSystem : IEcsRunSystem
         var officeData = staticData.offices.FirstOrDefault(x => x.officeType == officeComponent.officeType);
         officeView.icon.sprite = officeData.icon;
         officeView.idText.text = officeComponent.id.ToString();
-        officeView.incomeText.text = officeComponent.furnitures.Sum(x => x.Get<IncomeComponent>().income).ToString();
+        officeView.incomeText.text = officeComponent.furnitures.Sum(x => x.Get<IncomeComponent>().income).GetReduceMoney();
         
         officeObject.GetComponent<Button>().onClick.AddListener(() =>
         {

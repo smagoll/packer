@@ -45,7 +45,7 @@ sealed class IncomeSystem : IEcsInitSystem, IEcsRunSystem, IEcsDestroySystem
             ref var wallet = ref walletFilter.Get1(0);
             wallet.money += incomes.Sum(x => x.income);
             localMoney = wallet.money;
-            sceneData.money.text = wallet.money.ToString();
+            sceneData.money.text = wallet.money.GetReduceMoney();
             
             lastTime = Time.time;
         }
@@ -61,7 +61,7 @@ sealed class IncomeSystem : IEcsInitSystem, IEcsRunSystem, IEcsDestroySystem
     private void UpdateTextIncome()
     {
         var money = walletFilter.Get1(0).money;
-        sceneData.money.text = money.ToString();
+        sceneData.money.text = money.GetReduceMoney();
     }
 
     private void IncomeAbsence()
@@ -75,7 +75,7 @@ sealed class IncomeSystem : IEcsInitSystem, IEcsRunSystem, IEcsDestroySystem
             
             ref var wallet = ref walletFilter.Get1(0);
             wallet.money += incomes.Sum(x => x.income) * seconds;
-            sceneData.money.text = wallet.money.ToString();
+            sceneData.money.text = wallet.money.GetReduceMoney();
         }
     }
 

@@ -35,7 +35,7 @@ sealed class UIFurnitureSpawnerSystem : IEcsRunSystem
         var furnitureObject = Object.Instantiate(staticData.prefabFurnitureUI, sceneData.listFurnitures);
         
         var storeCell = furnitureObject.GetComponent<StoreCell>();
-        storeCell.textPrice.text = furniture.price.ToString();
+        storeCell.textPrice.text = furniture.price.GetReduceMoney();
         storeCell.icon.sprite = furniture.icon;
 
         furnitureObject.GetComponent<Button>().onClick.AddListener(() =>
