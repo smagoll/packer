@@ -25,13 +25,15 @@ sealed class OfficeSpawnerSystem : IEcsRunSystem
     private void Spawn(EcsEntity office)
     {
         var officeObject = Object.Instantiate(staticData.prefabOffice, sceneData.listOffices);
-        officeObject.GetComponent<EntityReference>().entity = office;
         var officeComponent = office.Get<OfficeComponent>();
         var officeView = officeObject.GetComponent<OfficeView>();
+        ref var officeViewReference = ref office.Get<OfficeViewReference>();
+        officeViewReference.officeView = officeView;
         var officeData = staticData.offices.FirstOrDefault(x => x.officeType == officeComponent.officeType);
         officeView.icon.sprite = officeData.icon;
         officeView.idText.text = officeComponent.id.ToString();
-        officeView.incomeText.text = officeComponent.furnitures.Sum(x => x.Get<IncomeComponent>().income).GetReduceMoney();
+        string income = officeComponent.furnitures?.Sum(x => x.Get<IncomeComponent>().income).GetReduceMoney();
+        officeView.incomeText.text = income;
         
         officeObject.GetComponent<Button>().onClick.AddListener(() =>
         {

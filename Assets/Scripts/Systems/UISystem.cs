@@ -1,3 +1,4 @@
+using System.Linq;
 using Leopotam.Ecs;
 using UnityEditor.UI;
 
@@ -8,6 +9,7 @@ sealed class UISystem : IEcsRunSystem, IEcsInitSystem
     private SceneData sceneData;
 
     private readonly EcsFilter<OfficeComponent, Opened> officeOpenedFilter;
+    private readonly EcsFilter<OfficeComponent, OfficeViewReference> officeViewFilter;
     private readonly EcsFilter<FurnitureComponent, Selled> furnitureSelledFilter;
     private readonly EcsFilter<HighlightComponent, PositionComponent> highlightFilter;
     
@@ -90,6 +92,7 @@ sealed class UISystem : IEcsRunSystem, IEcsInitSystem
     {
         ref var switchEvent = ref world.NewEntity().Get<SwitchMainStoreEvent>();
         switchEvent.isSwitch = false;
+        UpdateIncomeTextOffices();
     }
     
     private void ButtonBackContentToMain()
@@ -98,6 +101,7 @@ sealed class UISystem : IEcsRunSystem, IEcsInitSystem
         office.Del<Opened>();
         
         HideListFurnitures();
+        UpdateIncomeTextOffices();
         
         sceneData.canvasMain.gameObject.SetActive(true);
         sceneData.canvasContent.gameObject.SetActive(false);
@@ -113,6 +117,16 @@ sealed class UISystem : IEcsRunSystem, IEcsInitSystem
     private void UpdateTextButton()
     {
         var priceCell = furnitureSelledFilter.Get2(0).price;
-        buttonCell.textPrice.text = priceCell.ToString();
+        buttonCell.textPrice.text = priceCell.GetReduceMoney();
+    }
+    
+    private void UpdateIncomeTextOffices()
+    {
+        foreach (var i in officeViewFilter)
+        {
+            var officeView = officeViewFilter.Get2(i).officeView;
+            var officeComponent = officeViewFilter.Get1(i);
+            officeView.incomeText.text = officeComponent.furnitures?.Sum(x => x.Get<IncomeComponent>().income).GetReduceMoney();
+        }
     }
 }

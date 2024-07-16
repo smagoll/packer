@@ -40,6 +40,7 @@ sealed class IncomeSystem : IEcsInitSystem, IEcsRunSystem, IEcsDestroySystem
         foreach (var i in addOfficeEventFilter) UpdateTextIncome();
         foreach (var i in endCreateOfficesFilter) IncomeAbsence();
 
+        // income
         if (Time.time - lastTime > intervalTime)
         {
             ref var wallet = ref walletFilter.Get1(0);
@@ -78,7 +79,7 @@ sealed class IncomeSystem : IEcsInitSystem, IEcsRunSystem, IEcsDestroySystem
             sceneData.money.text = wallet.money.GetReduceMoney();
         }
     }
-
+    
     public void Destroy()
     {
         YandexGame.savesData.lastDateEnter = DateTime.Now.Ticks;

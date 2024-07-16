@@ -16,10 +16,9 @@ public static class Calculation
         foreach (var keyValue in reduce)
         {
             var reduceNumber = money / keyValue.Key;
-            if (reduceNumber > 1)
+            if (reduceNumber >= 1)
             {
                 reduceMoney = $"{reduceNumber}{keyValue.Value}";
-                break;
             }
         }
 
