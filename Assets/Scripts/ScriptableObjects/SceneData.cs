@@ -21,10 +21,10 @@ public class SceneData : MonoBehaviour
     public GameObject storeWindow;
 
     [Header("Buttons")]
-    public Button buttonBuyOffice;
-    public Button buttonBackContentToMain;
-    public Button buttonBackStoreToMain;
-    public Button sellFurniture;
+    public ClickButtonDefault buttonBuyOffice;
+    public ClickButtonDefault buttonBackContentToMain;
+    public ClickButtonDefault buttonBackStoreToMain;
+    public ClickButtonDefault sellFurniture;
 
     [Header("Texts")] 
     public TextMeshProUGUI money;

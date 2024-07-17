@@ -10,6 +10,8 @@ sealed class EffectSystem : IEcsRunSystem
     {
         foreach (var i in failBuyEventFilter)
         {
+            AudioController.instance.PlaySFX(AudioController.instance.fail);
+            
             DOTween.Sequence()
                 .Append(sceneData.failBackground.DOFade(.3f, .1f))
                 .Append(sceneData.failBackground.DOFade(0, .5f));

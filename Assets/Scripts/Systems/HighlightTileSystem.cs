@@ -37,7 +37,6 @@ sealed class HighlightTileSystem : IEcsRunSystem, IEcsInitSystem
             if(tile)
             { 
                 SetHighlight(tilePos);
-                //MarkFurniture();
             }
             else
             {
@@ -85,8 +84,11 @@ sealed class HighlightTileSystem : IEcsRunSystem, IEcsInitSystem
         foreach (var i in furnitureSelledFilter) furnitureSelledFilter.GetEntity(i).Del<Selled>();
         
         ref var officeComponent = ref officeOpenedFilter.Get1(0);
+        if (officeComponent.furnitures == null) return;
+        
         ref var listFurnitures = ref officeComponent.furnitures;
         var position = highlightFilter.Get2(0).position;
+        
         foreach (var furniture in listFurnitures.ToList())
         {
             if (furniture.Get<PositionComponent>().position == position)

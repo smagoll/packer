@@ -38,7 +38,7 @@ sealed class UIFurnitureSpawnerSystem : IEcsRunSystem
         storeCell.textPrice.text = furniture.price.GetReduceMoney();
         storeCell.icon.sprite = furniture.icon;
 
-        furnitureObject.GetComponent<Button>().onClick.AddListener(() =>
+        furnitureObject.GetComponent<ClickButtonDefault>().endClick.AddListener(() =>
         {
             var pos = highlightFilter.Get2(0).position;
             if (!TileExtensions.CheckTile(sceneData.tilemapFurniture, pos))
@@ -62,7 +62,8 @@ sealed class UIFurnitureSpawnerSystem : IEcsRunSystem
             var entity = officeOpenFilter.GetEntity(0);
             ref var spawnFurnitureComponent = ref entity.Get<SpawnFurnitureEvent>();
             spawnFurnitureComponent.id = furniture.id;
-            world.NewEntity().Get<ShowEditPanelEvent>();
+            world.NewEntity().Get<HideListFurnituresEvent>();
+            AudioController.instance.PlaySFXSmall(AudioController.instance.buy);
         }
         else
         {

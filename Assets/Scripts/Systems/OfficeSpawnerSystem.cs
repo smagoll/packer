@@ -35,7 +35,7 @@ sealed class OfficeSpawnerSystem : IEcsRunSystem
         string income = officeComponent.furnitures?.Sum(x => x.Get<IncomeComponent>().income).GetReduceMoney();
         officeView.incomeText.text = income;
         
-        officeObject.GetComponent<Button>().onClick.AddListener(() =>
+        officeObject.GetComponent<ClickButtonDefault>().endClick.AddListener(() =>
         {
             ref var officeContentEvent = ref office.Get<SpawnContentEvent>();
             office.Get<Opened>();

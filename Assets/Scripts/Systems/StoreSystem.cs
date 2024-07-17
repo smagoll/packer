@@ -45,8 +45,9 @@ sealed class StoreSystem : IEcsRunSystem
         storeCell.textPrice.text = office.price.GetReduceMoney();
         storeCell.icon.sprite = office.icon;
         
-        officeObject.GetComponent<Button>().onClick.AddListener(() =>
+        officeObject.GetComponent<ClickButtonDefault>().endClick.AddListener(() =>
         {
+            AudioController.instance.PlaySFXSmall(AudioController.instance.buy);
             BuyOffice(office);
         });
     }

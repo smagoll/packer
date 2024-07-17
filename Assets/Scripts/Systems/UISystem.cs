@@ -25,10 +25,14 @@ sealed class UISystem : IEcsRunSystem, IEcsInitSystem
     
     public void Init()
     {
-        sceneData.buttonBackStoreToMain.onClick.AddListener(ButtonBackStoreToMain);
-        sceneData.buttonBackContentToMain.onClick.AddListener(ButtonBackContentToMain);
-        sceneData.buttonBuyOffice.onClick.AddListener(ShowStore);
-        sceneData.sellFurniture.onClick.AddListener(() => world.NewEntity().Get<SellFurnitureEvent>());
+        sceneData.buttonBackStoreToMain.endClick.AddListener(ButtonBackStoreToMain);
+        sceneData.buttonBackContentToMain.endClick.AddListener(ButtonBackContentToMain);
+        sceneData.buttonBuyOffice.endClick.AddListener(ShowStore);
+        sceneData.sellFurniture.endClick.AddListener(() =>
+        {
+            world.NewEntity().Get<SellFurnitureEvent>();
+            AudioController.instance.PlaySFX(AudioController.instance.sell);
+        });
 
         buttonCell = sceneData.sellFurniture.GetComponent<ButtonCell>();
     }
