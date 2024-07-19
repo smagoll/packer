@@ -7,8 +7,8 @@ public struct FurnitureIncomeData
 {
     public string title;
     public int id;
-    public int income;
-    public int price;
+    public float income;
+    public float price;
     public Tile prefabTile;
     public Sprite icon;
 }

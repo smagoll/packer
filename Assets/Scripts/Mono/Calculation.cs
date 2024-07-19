@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public static class Calculation
 {
@@ -9,16 +11,16 @@ public static class Calculation
         {1000000000, "B"}
     };
     
-    public static string GetReduceMoney(this int money)
+    public static string GetReduceMoney(this float money)
     {
-        string reduceMoney = money.ToString();
+        string reduceMoney = money.ToString("#.##");
 
         foreach (var keyValue in reduce)
         {
             var reduceNumber = money / keyValue.Key;
             if (reduceNumber >= 1)
             {
-                reduceMoney = $"{reduceNumber}{keyValue.Value}";
+                reduceMoney = $"{reduceNumber:#.##}{keyValue.Value}";
             }
         }
 

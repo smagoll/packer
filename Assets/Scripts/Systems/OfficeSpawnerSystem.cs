@@ -39,7 +39,7 @@ sealed class OfficeSpawnerSystem : IEcsRunSystem
         {
             ref var officeContentEvent = ref office.Get<SpawnContentEvent>();
             office.Get<Opened>();
-            officeContentEvent.size = 2;
+            officeContentEvent.size = officeData.size;
         });
     }
 }

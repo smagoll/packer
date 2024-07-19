@@ -6,6 +6,7 @@ public class StaticData : ScriptableObject
 {
     public FurnitureIncomeData[] furnitures;
     public OfficeSizeData[] offices;
+    public Vector2 offsetParallaxBackground;
     
     [Header("Tiles")]
     public Tile tileFloor;

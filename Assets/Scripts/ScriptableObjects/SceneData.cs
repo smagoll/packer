@@ -14,7 +14,6 @@ public class SceneData : MonoBehaviour
 
     [Header("Windows")] 
     public GameObject canvasMain;
-    public GameObject canvasContent;
     public GameObject officeContent;
     public GameObject furniturePanel;
     public GameObject editPanel;
@@ -25,6 +24,8 @@ public class SceneData : MonoBehaviour
     public ClickButtonDefault buttonBackContentToMain;
     public ClickButtonDefault buttonBackStoreToMain;
     public ClickButtonDefault sellFurniture;
+    public ClickButtonDefault buttonJob;
+    public ClickButtonDefault buttonOffices;
 
     [Header("Texts")] 
     public TextMeshProUGUI money;
@@ -36,4 +37,6 @@ public class SceneData : MonoBehaviour
 
     [Header("Effects")] 
     public Image failBackground;
+    public Image backgroundContent;
+    
 }

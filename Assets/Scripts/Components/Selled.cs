@@ -1,4 +1,4 @@
 struct Selled
 {
-    public int price;
+    public float price;
 }

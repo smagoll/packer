@@ -1,4 +1,4 @@
 struct IncomeComponent
 {
-    public int income;
+    public float income;
 }

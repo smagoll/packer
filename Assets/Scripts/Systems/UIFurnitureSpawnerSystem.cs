@@ -36,6 +36,8 @@ sealed class UIFurnitureSpawnerSystem : IEcsRunSystem
         
         var storeCell = furnitureObject.GetComponent<StoreCell>();
         storeCell.textPrice.text = furniture.price.GetReduceMoney();
+        storeCell.textIncome.text = furniture.income + " e/c";
+        storeCell.textTitle.text = furniture.title;
         storeCell.icon.sprite = furniture.icon;
 
         furnitureObject.GetComponent<ClickButtonDefault>().endClick.AddListener(() =>

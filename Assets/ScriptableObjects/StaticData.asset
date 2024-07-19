@@ -16,26 +16,57 @@ MonoBehaviour:
   - title: "\u041E\u0431\u044B\u0447\u043D\u044B\u0439 \u0441\u0442\u043E\u043B"
     id: 1
     income: 1
-    price: 50
+    price: 10000
     prefabTile: {fileID: 11400000, guid: a5d7aa4fca0775b40849bb32c4dd18b0, type: 2}
     icon: {fileID: 21300000, guid: d75f4caf849d6f94d8f4e434b5d6fcbc, type: 3}
   - title: "\u041A\u0430\u0440\u0442\u043E\u043D"
     id: 2
-    income: 5
-    price: 100000
+    income: 3
+    price: 50000
     prefabTile: {fileID: 11400000, guid: a40b14929cafe214f911068f2c13224f, type: 2}
     icon: {fileID: 21300000, guid: 001f8d810c85c37428daa11722ab25cc, type: 3}
+  - title: "\u0425\u043E\u043B\u043E\u0434\u0438\u043B\u044C\u043D\u0438\u043A"
+    id: 3
+    income: 8
+    price: 300000
+    prefabTile: {fileID: 11400000, guid: a6d755adc0deae14e9de35d97fde3ff6, type: 2}
+    icon: {fileID: 21300000, guid: 536be987b4140e049a476d64df8d4518, type: 3}
+  - title: "\u0421\u0442\u043E\u043B \u0441\u043E \u0441\u0442\u0440\u0435\u0442\u0447\u0435\u043C"
+    id: 4
+    income: 12
+    price: 800000
+    prefabTile: {fileID: 11400000, guid: dc491184871715449a2097ca13227cde, type: 2}
+    icon: {fileID: 21300000, guid: 4160caa3b207b3f4f9e7ee9e800f5799, type: 3}
+  - title: "\u0421\u0442\u043E\u043B \u0441\u043E \u0441\u043A\u0430\u043D\u0435\u0440\u043E\u043C"
+    id: 5
+    income: 20
+    price: 1500000
+    prefabTile: {fileID: 11400000, guid: faff85eb4fac27a4699b92adb46065c7, type: 2}
+    icon: {fileID: 21300000, guid: 6459a74bc2675944dac88e591a6f794a, type: 3}
+  - title: "\u0422\u0435\u043B\u0435\u0432\u0438\u0437\u043E\u0440"
+    id: 6
+    income: 30
+    price: 4000000
+    prefabTile: {fileID: 11400000, guid: c1e6f49f82a3ab3478e4fa9babd52714, type: 2}
+    icon: {fileID: 21300000, guid: 8fce5c3e01d867846a2de1eba9e96676, type: 3}
+  - title: "\u0411\u043E\u0447\u043A\u0430 \u0441 \u0432\u043E\u0434\u043E\u0439"
+    id: 6
+    income: 70
+    price: 7000000
+    prefabTile: {fileID: 11400000, guid: 492fc19142b03f64a928440f4f36c189, type: 2}
+    icon: {fileID: 21300000, guid: cec30d3291af24d499ee87719219b954, type: 3}
   offices:
   - title: "\u0417\u0430\u0431\u0435\u0433\u0430\u043B\u043E\u0432\u043A\u0430"
     officeType: 0
     size: 2
-    price: 10000
+    price: 1000000
     icon: {fileID: 21300000, guid: 6b27fc7fa64fd20458745eb6c2e8d035, type: 3}
   - title: "\u0417\u0430\u0431\u0435\u0433\u0430\u043B\u043E\u0432\u043A\u0430"
     officeType: 1
     size: 3
-    price: 1000000
+    price: 2000000
     icon: {fileID: 21300000, guid: 1386fe5c4c0d9d34fbbbd4817cfbd237, type: 3}
+  offsetParallaxBackground: {x: 0.02, y: 0.005}
   tileFloor: {fileID: 11400000, guid: 2e7f47c31eeda5b49a6a532cdac60414, type: 2}
   tileHighlight: {fileID: 11400000, guid: 254020981e92a8b4c8e22975b8c2ae8f, type: 2}
   prefabOfficeUI: {fileID: 601894154709902627, guid: 6868431e2e2288041bd27907f5dd051c, type: 3}

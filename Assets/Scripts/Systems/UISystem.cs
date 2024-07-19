@@ -20,6 +20,9 @@ sealed class UISystem : IEcsRunSystem, IEcsInitSystem
     
     private readonly EcsFilter<ShowEditPanelEvent> showEditPanelFilter;
     private readonly EcsFilter<HideEditPanelEvent> hideEditPanelFilter;
+    
+    private readonly EcsFilter<ShowJobEvent> showJobEvent;
+    private readonly EcsFilter<HideJobEvent> hideJobEvent;
 
     private ButtonCell buttonCell;
     
@@ -72,7 +75,6 @@ sealed class UISystem : IEcsRunSystem, IEcsInitSystem
     private void TransitionToContent()
     {
         sceneData.canvasMain.gameObject.SetActive(false);
-        sceneData.canvasContent.gameObject.SetActive(true);
         sceneData.officeContent.SetActive(true);
     }
 
@@ -108,7 +110,6 @@ sealed class UISystem : IEcsRunSystem, IEcsInitSystem
         UpdateIncomeTextOffices();
         
         sceneData.canvasMain.gameObject.SetActive(true);
-        sceneData.canvasContent.gameObject.SetActive(false);
         sceneData.officeContent.SetActive(false);
         sceneData.tilemapFurniture.ClearAllTiles();
     }

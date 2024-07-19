@@ -25,21 +25,25 @@ sealed class InputSystem : IEcsRunSystem
             
             var cam = Camera.main;
             var mousePos = Input.mousePosition;
-            mousePos.z = -cam.transform.position.z;
-            var worldPoint = Camera.main.ScreenToWorldPoint(mousePos);
-
-            var tpos = sceneData.tilemapFloor.WorldToCell(worldPoint);
-            // Try to get a tile from cell position
-            var tile = sceneData.tilemapFloor.GetTile(tpos);
-
-            if (tile)
-            {
-                selectedTile = tile;
-            }
             
-            var entityCam = world.NewEntity();
-            ref var moveCameraEvent = ref entityCam.Get<MoveCamera>();
-            moveCameraEvent.startPos = worldPoint;
+            if (cam != null)
+            {
+                mousePos.z = -cam.transform.position.z;
+                var worldPoint = cam.ScreenToWorldPoint(mousePos);
+
+                var tpos = sceneData.tilemapFloor.WorldToCell(worldPoint);
+                // Try to get a tile from cell position
+                var tile = sceneData.tilemapFloor.GetTile(tpos);
+
+                if (tile)
+                {
+                    selectedTile = tile;
+                }
+
+                var entityCam = world.NewEntity();
+                ref var moveCameraEvent = ref entityCam.Get<MoveCamera>();
+                moveCameraEvent.startPos = worldPoint;
+            }
         }
 
         if (Input.GetMouseButtonUp(0))
@@ -54,27 +58,31 @@ sealed class InputSystem : IEcsRunSystem
             
             var cam = Camera.main;
             var mousePos = Input.mousePosition;
-            mousePos.z = -cam.transform.position.z;
-            var worldPoint = cam.ScreenToWorldPoint(mousePos);
-
-            var tilePosition = sceneData.tilemapFloor.WorldToCell(worldPoint);
-
-            var tile = sceneData.tilemapFloor.GetTile(tilePosition);
-
-            if (tile)
+            
+            if (cam != null)
             {
-                if (selectedTile == tile)
+                mousePos.z = -cam.transform.position.z;
+                var worldPoint = cam.ScreenToWorldPoint(mousePos);
+
+                var tilePosition = sceneData.tilemapFloor.WorldToCell(worldPoint);
+
+                var tile = sceneData.tilemapFloor.GetTile(tilePosition);
+
+                if (tile)
                 {
-                    EcsEntity entity = world.NewEntity();
-                    ref var highlightEvent = ref entity.Get<HighlightTileEvent>();
-                    highlightEvent.worldPoint = worldPoint;
+                    if (selectedTile == tile)
+                    {
+                        EcsEntity entity = world.NewEntity();
+                        ref var highlightEvent = ref entity.Get<HighlightTileEvent>();
+                        highlightEvent.worldPoint = worldPoint;
+                    }
                 }
-            }
-            else
-            {
-                sceneData.tilemapHighlight.ClearAllTiles();
-                world.NewEntity().Get<HideListFurnituresEvent>();
-                sceneData.editPanel.SetActive(false);
+                else
+                {
+                    sceneData.tilemapHighlight.ClearAllTiles();
+                    world.NewEntity().Get<HideListFurnituresEvent>();
+                    sceneData.editPanel.SetActive(false);
+                }
             }
 
             selectedTile = null;
@@ -84,8 +92,10 @@ sealed class InputSystem : IEcsRunSystem
     private bool CheckUI()
     {
         var eventSystem = EventSystem.current;
-        var pointerEventData = new PointerEventData(eventSystem);
-        pointerEventData.position = Input.mousePosition;
+        var pointerEventData = new PointerEventData(eventSystem)
+        {
+            position = Input.mousePosition
+        };
         List<RaycastResult> results = new List<RaycastResult>();
         eventSystem.RaycastAll(pointerEventData, results);
         

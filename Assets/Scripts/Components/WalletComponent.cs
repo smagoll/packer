@@ -1,4 +1,4 @@
 struct WalletComponent
 {
-    public int money;
+    public float money;
 }

@@ -10,7 +10,7 @@ namespace YG
         public string language = "ru";
         public bool promptDone;
 
-        public int money = 100;
+        public float money = 100;
         public long lastDateEnter;
         public List<OfficeSave> offices;
 

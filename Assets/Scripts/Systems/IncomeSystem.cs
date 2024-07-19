@@ -22,7 +22,7 @@ sealed class IncomeSystem : IEcsInitSystem, IEcsRunSystem, IEcsDestroySystem
     private bool isRun;
     private float lastTime;
     private readonly float intervalTime = 1f;
-    private int localMoney;
+    private float localMoney;
     
     public void Init()
     {
