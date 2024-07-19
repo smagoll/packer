@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using Leopotam.Ecs;
 using UnityEngine;
 using YG;
@@ -31,6 +32,7 @@ sealed class IncomeSystem : IEcsInitSystem, IEcsRunSystem, IEcsDestroySystem
         walletComponent.money = YandexGame.savesData.money;
         
         UpdateTextIncome();
+        SaveCycle().Forget();
     }
 
     public void Run()
@@ -56,6 +58,7 @@ sealed class IncomeSystem : IEcsInitSystem, IEcsRunSystem, IEcsDestroySystem
     {
         incomes.Clear();
         foreach (var i in incomeFilter) incomes.Add(incomeFilter.Get1(i));
+        sceneData.income.text = incomes.Sum(x => x.income).GetReduceMoney() + " е/с";
         UpdateTextIncome();
     }
 
@@ -79,11 +82,25 @@ sealed class IncomeSystem : IEcsInitSystem, IEcsRunSystem, IEcsDestroySystem
             sceneData.money.text = wallet.money.GetReduceMoney();
         }
     }
-    
-    public void Destroy()
+
+    private void SaveMoney()
     {
         YandexGame.savesData.lastDateEnter = DateTime.Now.Ticks;
         YandexGame.savesData.money = localMoney;
         YandexGame.SaveProgress();
+    }
+
+    private async UniTaskVoid SaveCycle()
+    {
+        while (Application.isPlaying)
+        {
+            SaveMoney();
+            await UniTask.Delay(60000);
+        }
+    }
+    
+    public void Destroy()
+    {
+        SaveMoney();
     }
 }

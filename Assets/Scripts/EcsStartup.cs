@@ -37,10 +37,10 @@ public class EcsStartup : MonoBehaviour
             .Add(new IncomeSystem())
             .Add(new StoreSystem())
 
+            .Add(new CameraControllerSystem())
             .Add(new HighlightTileSystem())
             .Add(new UISystem())
             .Add(new UIFurnitureSpawnerSystem())
-            .Add(new CameraControllerSystem())
 
             .Add(new EffectSystem());
     }
@@ -55,6 +55,9 @@ public class EcsStartup : MonoBehaviour
     private void AddOneFrames()
     {
         systems
+            .OneFrame<MouseDownInput>()
+            .OneFrame<MouseUpInput>()
+            
             .OneFrame<AddOfficeEvent>()
             .OneFrame<UpdateIncomeEvent>()
             .OneFrame<SpawnOfficeEvent>()

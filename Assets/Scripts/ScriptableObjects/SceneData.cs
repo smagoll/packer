@@ -18,6 +18,7 @@ public class SceneData : MonoBehaviour
     public GameObject furniturePanel;
     public GameObject editPanel;
     public GameObject storeWindow;
+    public GameObject job;
 
     [Header("Buttons")]
     public ClickButtonDefault buttonBuyOffice;
@@ -29,6 +30,7 @@ public class SceneData : MonoBehaviour
 
     [Header("Texts")] 
     public TextMeshProUGUI money;
+    public TextMeshProUGUI income;
 
     [Header("Tilemaps")] 
     public Tilemap tilemapFloor;

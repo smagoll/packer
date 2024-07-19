@@ -1,6 +1,6 @@
 using System.Linq;
 using Leopotam.Ecs;
-using UnityEditor.UI;
+using Unity.VisualScripting;
 
 sealed class UISystem : IEcsRunSystem, IEcsInitSystem
 {
@@ -20,14 +20,13 @@ sealed class UISystem : IEcsRunSystem, IEcsInitSystem
     
     private readonly EcsFilter<ShowEditPanelEvent> showEditPanelFilter;
     private readonly EcsFilter<HideEditPanelEvent> hideEditPanelFilter;
-    
-    private readonly EcsFilter<ShowJobEvent> showJobEvent;
-    private readonly EcsFilter<HideJobEvent> hideJobEvent;
 
     private ButtonCell buttonCell;
     
     public void Init()
     {
+        sceneData.buttonJob.endClick.AddListener(ShowJobWindow);
+        sceneData.buttonOffices.endClick.AddListener(ShowOffice);
         sceneData.buttonBackStoreToMain.endClick.AddListener(ButtonBackStoreToMain);
         sceneData.buttonBackContentToMain.endClick.AddListener(ButtonBackContentToMain);
         sceneData.buttonBuyOffice.endClick.AddListener(ShowStore);
@@ -133,5 +132,17 @@ sealed class UISystem : IEcsRunSystem, IEcsInitSystem
             var officeComponent = officeViewFilter.Get1(i);
             officeView.incomeText.text = officeComponent.furnitures?.Sum(x => x.Get<IncomeComponent>().income).GetReduceMoney();
         }
+    }
+
+    private void ShowJobWindow()
+    {
+        sceneData.job.SetActive(true);
+        sceneData.canvasMain.SetActive(false);
+    }
+    
+    private void ShowOffice()
+    {
+        sceneData.job.SetActive(false);
+        sceneData.canvasMain.SetActive(true);
     }
 }
